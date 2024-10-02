@@ -1,16 +1,20 @@
 <template>
     <div>
-        <router-link to="/">Home</router-link>
-        <router-link to="/about">About</router-link>
-        <Header/>
+        <nav>
+            <MainNavBar/>
+        </nav>
         <main>
-            <RouterView/>
+            <div>
+                <SideBar/>
+            </div>
+            <div>
+                <RouterView/>
+            </div>  
         </main>
-        <Footer/>
     </div>
 </template>
 <script setup>
-import Header from '../components/Header.vue';
-import Footer from '../components/Footer.vue';
+import MainNavBar from '../components/navs/MainNavBar.vue';
+import SideBar from '../components/navs/SideBar.vue';
 import { RouterView } from 'vue-router';
 </script>
