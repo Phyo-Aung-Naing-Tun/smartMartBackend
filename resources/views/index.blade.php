@@ -17,7 +17,7 @@
             font-family: 'Nunito', sans-serif;
         }
     </style>
-    @vite('resources/js/app.css')
+    @vite('resources/js/app.js')
 </head>
 
 <body>
