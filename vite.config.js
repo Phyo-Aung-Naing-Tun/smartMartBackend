@@ -12,4 +12,3 @@ export default defineConfig({
     ],
 
 });
-https://github.com/Phyo-Aung-Naing-Tun/smartMart.git

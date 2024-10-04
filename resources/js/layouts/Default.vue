@@ -3,11 +3,11 @@
         <nav>
             <MainNavBar/>
         </nav>
-        <main>
-            <div>
+        <main class=" flex">
+            <div class="w-[250px]">
                 <SideBar/>
             </div>
-            <div>
+            <div class="flex-grow min-h-screen pt-10">
                 <RouterView/>
             </div>  
         </main>
