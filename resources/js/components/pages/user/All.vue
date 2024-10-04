@@ -14,7 +14,7 @@ let products = ref(null);
 
 onMounted(getProducts);
 function getProducts(){
-  apiClient.get('/products').then(response => {
+  apiClient.get('/user').then(response => {
     products.value = response.data;
     console.log(response);
   }).catch(error=>{

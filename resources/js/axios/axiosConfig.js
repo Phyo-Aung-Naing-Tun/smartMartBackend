@@ -2,10 +2,11 @@ import axios from "axios";
 import { router } from "../router";
 
 const apiClient = axios.create({
-    //  baseUrl : "http://127.0.0.1:8000/api",
-    baseURL: "https://fakestoreapi.com/",
+    baseURL : "http://127.0.0.1:8000/api",
+    // baseURL: "https://fakestoreapi.com/",
      headers:{
-        "Content-Type":"application/json"
+        "Content-Type":"application/json",
+        'Accept': 'application/json',
      },
      timeout: 10000
 });
@@ -29,7 +30,7 @@ apiClient.interceptors.response.use(
 },
     error => {
         if(error.response && error.response.status === 401){
-            return router.go('/home');
+            return router.push('/auth/login');
         }
         return Promise.reject(error);
 }
