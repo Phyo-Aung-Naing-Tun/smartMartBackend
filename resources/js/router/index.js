@@ -17,18 +17,26 @@ const Register = () => import('../views/Register.vue');
 
 const routes = [
   {
-    path: '/', component: Default, children: [
-      {path: '',component: Home},
+    path: '/', 
+    component: Default, 
+    children: [
       {
-      //User
-      path: "user", component: Index,
-      //---
+        path: '',
+        component: Home
+      },
+      {
+      path: "user",
+       component: Index,
       }],
-    path: '/auth',component: Auth, children:[
+  },
+  {
+    path: '/auth',
+    component: Auth,
+    children:[
       { path: "login",component: Login},
       { path: "register",component: Register}
     ]
-  },
+  }
 ]
 
 export const router = createRouter({
