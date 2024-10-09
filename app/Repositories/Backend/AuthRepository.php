@@ -5,6 +5,7 @@ namespace App\Repositories\Backend;
 use App\Http\Responses\BaseResponse;
 use App\Models\User;
 use App\Traits\AuthTraits;
+use Illuminate\Support\Facades\Auth;
 
 class AuthRepository
 {
@@ -15,6 +16,21 @@ class AuthRepository
     public function __construct(BaseResponse $baseResponse)
     {
         $this->response = $baseResponse;
+    }
+
+    public function login($request)
+    {
+        $validated = $request->validate([
+            'email' => 'required',
+            'password' => 'required',
+        ]);
+        if (Auth::attempt($validated)) {
+            $user =  Auth::user();
+            $token = $user->createToken('auth_token')->plainTextToken;
+            return $this->response->success(['data' => $user, 'token' => $token], 200);
+        } else {
+            return $this->response->error('Login Failed', 401);
+        }
     }
 
     public function register($request)

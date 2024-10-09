@@ -17,9 +17,9 @@ class AuthController extends Controller
         $this->repo = $authRepository;
     }
 
-    public function index()
+    public function login(Request $request)
     {
-        //
+        return $this->repo->login($request);
     }
 
     /**
