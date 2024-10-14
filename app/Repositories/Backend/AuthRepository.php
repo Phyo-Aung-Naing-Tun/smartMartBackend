@@ -2,10 +2,12 @@
 
 namespace App\Repositories\Backend;
 
-use App\Http\Responses\BaseResponse;
 use App\Models\User;
+use App\Mail\OtpMail;
 use App\Traits\AuthTraits;
+use App\Http\Responses\BaseResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class AuthRepository
 {
@@ -26,8 +28,11 @@ class AuthRepository
         ]);
         if (Auth::attempt($validated)) {
             $user =  Auth::user();
-            $token = $user->createToken('auth_token')->plainTextToken;
-            return $this->response->success(['data' => $user, 'token' => $token], 200);
+            $otp = rand(111111, 999999);
+            Mail::to($user)->send(new OtpMail($otp));
+            return ['otp' => 'send'];
+            // $token = $user->createToken('auth_token')->plainTextToken;
+            // return $this->response->success(['data' => $user, 'token' => $token], 'Login Successful', 200);
         } else {
             return $this->response->error('Login Failed', 401);
         }
