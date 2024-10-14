@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Mail\OtpMail;
 use App\Traits\AuthTraits;
 use App\Http\Responses\BaseResponse;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
@@ -28,11 +29,12 @@ class AuthRepository
         ]);
         if (Auth::attempt($validated)) {
             $user =  Auth::user();
-            $otp = rand(111111, 999999);
+
+            $otp = rand(100000, 999999);
+            $user->otp = $otp;
+            $user->otp_expired_at = Carbon::now()->addMinute(5);
             Mail::to($user)->send(new OtpMail($otp));
-            return ['otp' => 'send'];
-            // $token = $user->createToken('auth_token')->plainTextToken;
-            // return $this->response->success(['data' => $user, 'token' => $token], 'Login Successful', 200);
+            return $this->response->success(["success" => true], 'Your otp is send to your email address.', 200);
         } else {
             return $this->response->error('Login Failed', 401);
         }
