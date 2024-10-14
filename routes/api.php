@@ -11,4 +11,5 @@ Route::get('/user', function (Request $request) {
 Route::controller(AuthController::class)->group(function () {
     Route::post("/register", "register");
     Route::post("/login", "login");
+    Route::post("/verify_otp", "verifyOtp");
 });

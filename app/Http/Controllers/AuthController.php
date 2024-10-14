@@ -30,6 +30,11 @@ class AuthController extends Controller
         return $this->repo->register($request);
     }
 
+    public function verifyOtp(Request $request)
+    {
+        return $this->repo->verifyOtp($request);
+    }
+
     /**
      * Display the specified resource.
      */

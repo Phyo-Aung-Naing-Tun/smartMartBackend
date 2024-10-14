@@ -32,7 +32,8 @@ class AuthRepository
 
             $otp = rand(100000, 999999);
             $user->otp = $otp;
-            $user->otp_expired_at = Carbon::now()->addMinute(5);
+            $user->otp_expired_at = Carbon::now()->addMinutes(5);
+            $user->save();
             Mail::to($user)->send(new OtpMail($otp));
             return $this->response->success(["success" => true], 'Your otp is send to your email address.', 200);
         } else {
@@ -62,6 +63,33 @@ class AuthRepository
             } catch (\Throwable $e) {
                 return $this->response->error($e->getMessage(), 500);
             }
+        }
+    }
+
+    public function verifyOtp($request)
+    {
+        try {
+            $validatd = $request->validate([
+                'email' => 'required|email',
+                'otp' => 'required'
+            ]);
+            $user = User::where('email', $validatd['email'])->first();
+            if ($user && $user->otp == $validatd['otp']) {
+
+                if (Carbon::parse($user->otp_expired_at)->isFuture()) {
+                    $token = $user->createToken('auth_token')->plainTextToken;
+                    $user->otp = null;
+                    $user->otp_expired_at = null;
+                    $user->save();
+                    return $this->response->success(["data" => $user, "token" => $token], "Login Successful", 200);
+                } else {
+                    return $this->response->error('Otp Timeout', 401);
+                }
+            } else {
+                return $this->response->error('Invalid Otp Code', 401);
+            }
+        } catch (\Throwable $e) {
+            return $this->response->error($e->getMessage(), 500);
         }
     }
 }
