@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Backend;
 
+use App\Http\Resources\AuthResource;
 use App\Models\User;
 use App\Mail\OtpMail;
 use App\Traits\AuthTraits;
@@ -75,13 +76,12 @@ class AuthRepository
             ]);
             $user = User::where('email', $validatd['email'])->first();
             if ($user && $user->otp == $validatd['otp']) {
-
                 if (Carbon::parse($user->otp_expired_at)->isFuture()) {
                     $token = $user->createToken('auth_token')->plainTextToken;
                     $user->otp = null;
                     $user->otp_expired_at = null;
                     $user->save();
-                    return $this->response->success(["data" => $user, "token" => $token], "Login Successful", 200);
+                    return $this->response->success(["data" => AuthResource::make($user), "token" => $token], "Login Successful", 200);
                 } else {
                     return $this->response->error('Otp Timeout', 401);
                 }
