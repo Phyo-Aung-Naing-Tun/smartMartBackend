@@ -13,11 +13,11 @@ const apiClient = axios.create({
 
 apiClient.interceptors.request.use(
 config => {
-    let token = localStorage.getItem('token');
+    let token = JSON.parse(localStorage.getItem('token'));
     if (token) {
         config.headers['Authorization'] = `Bearer ${token}`;
       }
-    return config
+    return config;
 }, 
 error => {
     return Promise.reject(error);
@@ -28,8 +28,8 @@ apiClient.interceptors.response.use(
     response => {
     return response;
 },
-    error => {
-        if(error.response && error.response.status === 401){
+    error => {                
+        if(error.response && error.response.status === 401 && window.location.pathname != "/auth/login" ){
             return router.push('/auth/login');
         }
         return Promise.reject(error);

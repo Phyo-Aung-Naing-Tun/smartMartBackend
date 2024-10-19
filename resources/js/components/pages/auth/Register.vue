@@ -47,6 +47,10 @@
 import { RouterLink } from 'vue-router';
 import {reactive,ref,computed} from "vue";
 import apiClient from '../../../axios/axiosConfig';
+import { router } from '../../../router';
+import { toast } from 'vue3-toastify';
+import 'vue3-toastify/dist/index.css';
+import { logHello, notiError, notiSuccess } from '../../../helpers/utlis';
 const form  = reactive({
     name : "",
     phone : "",
@@ -73,10 +77,13 @@ function register(){
     loading.value = true;
     apiClient.post('/register',form)
     .then((response) => {
-        console.log(response);
-        
+        notiSuccess('Registered Successful');
+        localStorage.setItem('user',JSON.stringify(response.data.data.data));
+        localStorage.setItem('token',JSON.stringify(response.data.data.token));
+        return router.push('/');        
     })
     .catch((error)=>{
+        notiError(error.response.data.message)
         console.log(error.response.data.message);
         
     })
