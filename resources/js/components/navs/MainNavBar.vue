@@ -3,7 +3,7 @@
         <h1 class="text-xl font-bold tracking-wide">Smart Mart</h1>
         <ul v-if="token" class=" flex gap-5 items-center">
             <li class="text-lg font-bold"><FontAwesomeIcon class="text-white text-xl cursor-pointer" :icon="faBell" /></li>
-            <li><FontAwesomeIcon class="text-white text-xl cursor-pointer" :icon="faCircleUser" /></li>
+            <li><router-link to="/profile" ><FontAwesomeIcon class="text-white text-xl cursor-pointer" :icon="faCircleUser" /></router-link></li>
         </ul>
         <ul v-else class=" flex gap-5 items-center">
             <li class=" tracking-wide"><router-link to="/auth/login">Login</router-link></li>

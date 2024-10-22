@@ -17,6 +17,7 @@ class AuthResource extends JsonResource
     {
         return [
             "id" => Hash::make($this->id),
+            "profile" => $this->profile,
             "name" => $this->name,
             "phone" => $this->phone,
             "email" => $this->email,

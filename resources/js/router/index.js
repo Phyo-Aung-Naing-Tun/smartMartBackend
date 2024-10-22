@@ -15,6 +15,12 @@ const Login = () => import('../views/Login.vue');
 const Register = () => import('../views/Register.vue');
 // ----
 
+
+//Profile
+const Profile = () => import('../views/profile/index.vue');
+// ----
+
+
 const routes = [
   {
     path: '/', 
@@ -27,7 +33,13 @@ const routes = [
       {
       path: "user",
        component: Index,
-      }],
+      },
+      {
+        path: "profile",
+        component: Profile,
+      }
+    ],
+      
   },
   {
     path: '/auth',
