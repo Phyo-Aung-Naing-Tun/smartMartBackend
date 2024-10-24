@@ -5,7 +5,7 @@
         <h1 class=" font-bold text-lg tracking-wide text-gray-900">{{ profile?.name }}</h1>
         <p  class=" tracking-wide text-gray-900">{{ profile?.email }}</p>
         <p  class=" tracking-wide text-gray-900">{{ profile?.phone }}</p>
-        <button class=" fixed bottom-20 right-20 hover:text-red-600 flex items-center gap-3">
+        <button @click="logOut" class=" fixed bottom-20 right-20 hover:text-red-600 flex items-center gap-3">
             <FontAwesomeIcon  :icon="faArrowRightFromBracket" />
             <span>Logout</span>
         </button>
@@ -18,6 +18,7 @@ import { toast } from 'vue3-toastify';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { icon } from '@fortawesome/fontawesome-svg-core';
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { router } from '../../router';
 const profile = ref(null);
 
 onMounted(
@@ -33,6 +34,20 @@ function getProfile() {
     })
     .catch(error => {
         toast(error)
+    })
+}
+
+function logOut(){
+    apiClient.post('/logout')
+    .then(response => {
+        if(response.data?.success){
+            router.push('/login')
+        }
+        
+    })
+    .catch(error => {
+        console.log(error);
+        
     })
 }
 
