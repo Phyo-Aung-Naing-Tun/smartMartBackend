@@ -92,4 +92,15 @@ class AuthRepository
             return $this->response->error($e->getMessage(), 500);
         }
     }
+
+    public function logout($user)
+    {
+
+        try {
+            $user->tokens()->delete();
+            return $this->response->success(['success' => true], 'Logout Successful', 200);
+        } catch (\Throwable $e) {
+            return $this->response->error($e->getMessage(), 500);
+        }
+    }
 }

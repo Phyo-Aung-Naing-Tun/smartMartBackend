@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Repositories\Backend\AuthRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
@@ -35,27 +36,11 @@ class AuthController extends Controller
         return $this->repo->verifyOtp($request);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function logout()
     {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        $user = Auth::user();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return  $this->repo->logout($user);
     }
 }
