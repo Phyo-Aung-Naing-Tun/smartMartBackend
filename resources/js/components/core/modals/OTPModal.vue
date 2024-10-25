@@ -37,9 +37,7 @@
                             >
                                 {{ title }}
                             </DialogTitle>
-                            <div class="mt-2">
-                                <slot></slot>
-                            </div>
+                            <div class="mt-2">hello world</div>
 
                             <div class="mt-4">
                                 <button

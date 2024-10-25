@@ -53,14 +53,12 @@
                 >
             </p>
         </form>
-        <CustomModal
-            width="500px"
+        <OTPModal
+            :width="'500px'"
             title="Enter OTP Code"
             :show="!openOtpModal"
             @dismiss="updateOtpModal"
-        >
-            <div>hello</div>
-        </CustomModal>
+        />
     </div>
 </template>
 <script setup>
@@ -68,7 +66,7 @@ import { reactive, ref } from "vue";
 import { RouterLink } from "vue-router";
 import apiClient from "../../../axios/axiosConfig";
 import { notiError } from "../../../helpers/utlis";
-import CustomModal from "../../core/modals/CustomModal.vue";
+import OTPModal from "../../core/modals/OTPModal.vue";
 const openOtpModal = ref(false);
 const form = reactive({
     email: null,
