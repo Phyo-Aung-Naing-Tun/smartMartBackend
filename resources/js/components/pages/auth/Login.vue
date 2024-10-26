@@ -54,7 +54,7 @@
             </p>
         </form>
         <OTPModal
-            :width="'500px'"
+            :width="'400px'"
             title="Enter OTP Code"
             :show="!openOtpModal"
             @dismiss="updateOtpModal"

@@ -37,17 +37,23 @@
                             >
                                 {{ title }}
                             </DialogTitle>
-                            <div class="mt-2">hello world</div>
-
-                            <div class="mt-4">
-                                <button
-                                    type="button"
-                                    class="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
-                                    @click="closeModal"
-                                >
-                                    Got it, thanks!
-                                </button>
+                            <div class="my-10 otp-modal flex justify-center">
+                                <v-otp-input
+                                    ref="otpInput"
+                                    input-classes="otp"
+                                    separator=":"
+                                    inputType="letter-numeric"
+                                    :num-inputs="6"
+                                    :should-auto-focus="true"
+                                    :should-focus-order="true"
+                                    @on-complete="handleOnComplete"
+                                />
                             </div>
+
+                            <Button
+                                text="Confirm"
+                                classes="bg-blue-600 text-white w-full h-[40px]"
+                            />
                         </DialogPanel>
                     </TransitionChild>
                 </div>
@@ -56,8 +62,9 @@
     </TransitionRoot>
 </template>
 
-<script setup>
-import { onMounted, ref } from "vue";
+<script setup lang="ts">
+import Button from "../Button.vue";
+import { ref } from "vue";
 import {
     TransitionRoot,
     TransitionChild,
@@ -67,7 +74,7 @@ import {
 } from "@headlessui/vue";
 
 const isOpen = ref(false);
-// const width = ref("500px");
+const otp = ref(null);
 const emits = defineEmits(["dismiss"]);
 const props = defineProps({
     width: {
@@ -82,4 +89,38 @@ const props = defineProps({
 function closeModal() {
     emits("dismiss", true);
 }
+
+const handleOnComplete = (value: string) => {
+    console.log(value);
+
+    otp.value = value;
+};
 </script>
+
+<style>
+.otp-modal .otp {
+    width: 35px;
+    height: 35px;
+    padding: 5px;
+    margin: 0 10px;
+    font-size: 20px;
+    border-radius: 4px;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    text-align: center;
+}
+
+/* Background colour of an input field with value */
+.otp-modal .otp.is-complete {
+    background-color: #e4e4e4;
+}
+.otp-modal .otp::-webkit-inner-spin-button,
+.otp-modal .otp::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.otp-modal input::placeholder {
+    font-size: 15px;
+    text-align: center;
+    font-weight: 600;
+}
+</style>
