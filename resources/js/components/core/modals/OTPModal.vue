@@ -37,7 +37,7 @@
                             >
                                 {{ title }}
                             </DialogTitle>
-                            <div class="my-10 otp-modal flex justify-center">
+                            <div class="mt-10 otp-modal flex justify-center">
                                 <v-otp-input
                                     ref="otpInput"
                                     input-classes="otp"
@@ -48,6 +48,9 @@
                                     :should-focus-order="true"
                                     @on-complete="handleOnComplete"
                                 />
+                            </div>
+                            <div class="my-6">
+                                <Counter :seconds="10" />
                             </div>
 
                             <Button
@@ -72,6 +75,7 @@ import {
     DialogPanel,
     DialogTitle,
 } from "@headlessui/vue";
+import Counter from "../Counter.vue";
 
 const isOpen = ref(false);
 const otp = ref(null);
