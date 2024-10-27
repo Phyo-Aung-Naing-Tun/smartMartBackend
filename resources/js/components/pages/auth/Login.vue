@@ -38,12 +38,12 @@
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                 />
             </div>
-            <button
+            <Button
+                :isLoading="isLoading"
                 type="submit"
-                class="w-full text-white bg-blue-900 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-            >
-                Sign In
-            </button>
+                text="Sign In"
+                classes="text-white bg-blue-900 h-10 w-full"
+            />
             <p class="text-sm font-light text-gray-500">
                 Don't have an account?
                 <RouterLink
@@ -54,26 +54,34 @@
             </p>
         </form>
         <OTPModal
+            :secondsForTimmer="1000"
             :width="'400px'"
             title="Enter OTP Code"
-            :show="!openOtpModal"
+            :show="openOtpModal"
             @dismiss="updateOtpModal"
+            @submit="submitOTP"
+            @rerequest="rerequestOTP"
         />
     </div>
 </template>
-<script setup>
+<script setup lang="ts">
 import { reactive, ref } from "vue";
 import { RouterLink } from "vue-router";
 import apiClient from "../../../axios/axiosConfig";
-import { notiError } from "../../../helpers/utlis";
+import { notiError, notiSuccess } from "../../../utlis/helpers";
 import OTPModal from "../../core/modals/OTPModal.vue";
-const openOtpModal = ref(false);
+import { router } from "../../../router";
+import Button from "../../core/Button.vue";
+const openOtpModal: Boolean = ref(false);
+const isLoading: Boolean = ref(false);
+
 const form = reactive({
     email: null,
     password: null,
 });
 
 function login() {
+    isLoading.value = true;
     apiClient
         .post("/login", form)
         .then((response) => {
@@ -84,10 +92,45 @@ function login() {
         .catch((error) => {
             notiError(error.response.data.message);
             console.log(error.response.data.message);
+        })
+        .finally(() => {
+            isLoading.value = false;
         });
 }
 
-function updateOtpModal() {
+function submitOTP(value: String): void {
+    apiClient
+        .post("/verify_otp", {
+            email: form.email,
+            otp: value,
+        })
+        .then((response) => {
+            if (response.status === 200) {
+                notiSuccess("Login Successful");
+                localStorage.setItem(
+                    "user",
+                    JSON.stringify(response.data.data.data)
+                );
+                localStorage.setItem(
+                    "token",
+                    JSON.stringify(response.data.data.token)
+                );
+                return router.push("/");
+            }
+        })
+        .catch((error) => {
+            notiError(error.response?.data?.message);
+            console.log("error", error.response?.data.message);
+        });
+    console.log(value);
+}
+
+function rerequestOTP(): void {
+    console.log("rerequesting");
+}
+
+function updateOtpModal(): void {
+    localStorage.clear("duration"); //reset the timmer
     openOtpModal.value = !openOtpModal.value;
 }
 </script>

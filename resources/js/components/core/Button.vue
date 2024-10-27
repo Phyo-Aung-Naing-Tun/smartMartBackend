@@ -13,6 +13,7 @@
     </button>
 </template>
 <script setup lang="ts">
+import { computed } from "vue";
 import { router } from "../../router";
 
 const props = defineProps({
@@ -41,12 +42,14 @@ const props = defineProps({
 });
 const emits = defineEmits(["action"]);
 
-const objectOfAttrs: Object = {
-    class: `${props.classes} ${
-        props.isDisable && "opacity-20"
-    } rounded tracking-wide flex justify-center  items-center gap-3`,
-    disabled: props.isDisable,
-};
+const objectOfAttrs: Object = computed(() => {
+    return {
+        class: `${props.classes} ${
+            props.isDisable && "opacity-20"
+        } rounded tracking-wide transition ease-linear  flex justify-center  items-center gap-3`,
+        disabled: props.isDisable,
+    };
+});
 
 function makeAction(): void {
     if (props.link?.length) {

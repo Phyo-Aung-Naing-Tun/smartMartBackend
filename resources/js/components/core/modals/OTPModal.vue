@@ -1,6 +1,6 @@
 <template>
     <TransitionRoot appear :show="isOpen" as="template">
-        <Dialog as="div" @close="closeModal" class="relative z-10">
+        <Dialog as="div" class="relative z-10">
             <TransitionChild
                 as="template"
                 enter="duration-300 ease-out"
@@ -33,10 +33,20 @@
                             <DialogTitle
                                 v-if="title"
                                 as="h3"
-                                class="text-lg font-medium leading-6 text-gray-900"
+                                class="text-lg flex justify-between items-center font-medium leading-6 text-gray-900"
                             >
-                                {{ title }}
+                                <span>{{ title }}</span>
+                                <Button
+                                    @action="closeModal"
+                                    classes="hover:scale-[1.1]"
+                                >
+                                    <FontAwesomeIcon
+                                        class="text-red-600"
+                                        :icon="faCircleXmark"
+                                    />
+                                </Button>
                             </DialogTitle>
+
                             <div class="mt-10 otp-modal flex justify-center">
                                 <v-otp-input
                                     ref="otpInput"
@@ -46,16 +56,29 @@
                                     :num-inputs="6"
                                     :should-auto-focus="true"
                                     :should-focus-order="true"
+                                    @on-change="handleOnChange"
                                     @on-complete="handleOnComplete"
                                 />
                             </div>
                             <div class="my-6">
-                                <Counter :seconds="20" @timesup="timesup" />
+                                <Counter
+                                    :seconds="secondsForTimmer"
+                                    @timesup="timesup"
+                                />
                             </div>
 
                             <Button
+                                v-if="!isTimesUp"
+                                @action="submitOtp"
+                                :isDisable="isDisableButton"
                                 text="Confirm"
-                                classes="bg-blue-600 text-white w-full h-[40px]"
+                                classes="bg-blue-600 hover:bg-blue-400 text-white w-full h-[40px]"
+                            />
+                            <Button
+                                v-else
+                                @action="resendCode"
+                                text="Resend Code"
+                                classes="bg-blue-600 hover:bg-blue-400 text-white w-full h-[40px]"
                             />
                         </DialogPanel>
                     </TransitionChild>
@@ -76,11 +99,14 @@ import {
     DialogTitle,
 } from "@headlessui/vue";
 import Counter from "../Counter.vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
 let isOpen: Boolean = ref(false);
+let isDisableButton: Boolean = ref(true);
 let isTimesUp: Boolean = ref(false);
 let otp = ref(null);
-const emits = defineEmits(["dismiss"]);
+const emits = defineEmits(["dismiss", "submit", "rerequest"]);
 const props = defineProps({
     width: {
         type: String,
@@ -89,10 +115,22 @@ const props = defineProps({
         type: String,
         default: null,
     },
+    secondsForTimmer: {
+        type: Number,
+        default: 0,
+    },
 });
 
 function closeModal() {
     emits("dismiss", true);
+}
+
+function submitOtp() {
+    emits("submit", otp.value);
+}
+
+function resendCode() {
+    emits("rerequest", true);
 }
 
 function timesup(): void {
@@ -100,9 +138,16 @@ function timesup(): void {
 }
 
 const handleOnComplete = (value: string) => {
-    console.log(value);
-
+    isDisableButton.value = false;
     otp.value = value;
+};
+
+const handleOnChange = (value: string) => {
+    if (value?.length === 6) {
+        isDisableButton.value = false;
+    } else {
+        isDisableButton.value = true;
+    }
 };
 </script>
 
