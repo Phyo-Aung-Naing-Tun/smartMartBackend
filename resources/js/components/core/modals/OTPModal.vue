@@ -42,7 +42,7 @@
                                     ref="otpInput"
                                     input-classes="otp"
                                     separator=":"
-                                    inputType="letter-numeric"
+                                    inputType="number"
                                     :num-inputs="6"
                                     :should-auto-focus="true"
                                     :should-focus-order="true"
@@ -50,7 +50,7 @@
                                 />
                             </div>
                             <div class="my-6">
-                                <Counter :seconds="10" />
+                                <Counter :seconds="20" @timesup="timesup" />
                             </div>
 
                             <Button
@@ -77,8 +77,9 @@ import {
 } from "@headlessui/vue";
 import Counter from "../Counter.vue";
 
-const isOpen = ref(false);
-const otp = ref(null);
+let isOpen: Boolean = ref(false);
+let isTimesUp: Boolean = ref(false);
+let otp = ref(null);
 const emits = defineEmits(["dismiss"]);
 const props = defineProps({
     width: {
@@ -92,6 +93,10 @@ const props = defineProps({
 
 function closeModal() {
     emits("dismiss", true);
+}
+
+function timesup(): void {
+    isTimesUp.value = true;
 }
 
 const handleOnComplete = (value: string) => {
