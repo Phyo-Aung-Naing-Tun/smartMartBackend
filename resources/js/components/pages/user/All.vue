@@ -1,28 +1,29 @@
 <template>
-      <div>
-        <div class="text-red-600">hello world</div>
-        <Footable :json="json"/>
-        <pre>{{ products }}</pre>
-      </div>
+    <div class="px-3 mt-6">
+        <Footable v-if="products" :json="json" :data="products.data" />
+    </div>
 </template>
 <script setup>
-import Footable from '../../core/Footable.vue';
-import json from '../../../directives/user.json';
-import apiClient from '../../../axios/axiosConfig';
-import {ref , onMounted} from "vue";
+import Footable from "../../core/Footable.vue";
+import json from "../../../directives/user.json";
+import apiClient from "../../../axios/axiosConfig";
+import { ref, onMounted } from "vue";
+import { notiError } from "../../../utlis/helpers";
 let products = ref(null);
 
 onMounted(getProducts);
-function getProducts(){
-  apiClient.get('/user').then(response => {
-    products.value = response.data;
-    console.log(response);
-  }).catch(error=>{
-    console.log(error);  
-  }).finally(()=>{
-    console.log('finally');
-    
-  })
+function getProducts() {
+    apiClient
+        .get("/users")
+        .then((response) => {
+            products.value = response.data;
+        })
+        .catch((error) => {
+            notiError("Server Error");
+            console.log(error);
+        })
+        .finally(() => {
+            console.log("finally");
+        });
 }
-
 </script>
