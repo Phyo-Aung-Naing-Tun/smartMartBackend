@@ -12,27 +12,27 @@
                  </td>
                 </th>
             </thead>
-            <tbody v-if="json?.body">
+            <tbody v-if="json?.body.length">
                 <tr v-for="(body, index) in json.body" :key="index">
                     <td
                         class="border p-2"
                         v-for="(head, index) in json.head"
                         :key="index"
-                    >                        <div  v-if="head === 'profile'">
+                    >   
+                        <div  v-if="head === 'profile'">
                             <img class=" rounded-full shadow  mx-auto w-10 h-10 flex  border border-blue-800" v-if="body[head]" :src="body[head]" />
                             <div class=" rounded-full shadow bg-white mx-auto w-10 h-10 flex justify-center items-center border border-blue-800">
                                 <FontAwesomeIcon class=" text-xl primary_text" :icon="faUser"/>
                             </div>
                         </div>
                         <span v-else-if="head === 'created at'">
-                            create
+                           {{ formatDate(body['created_at']) }}
                         </span>
                         <div v-else-if="head === 'actions'">
                             actions
                         </div>
                         <span v-else>{{ body[head] }}</span> 
                     </td>
-                
                 </tr>
             </tbody>
         </table>
@@ -43,6 +43,7 @@ import { icon } from '@fortawesome/fontawesome-svg-core';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { onBeforeMount, onMounted } from 'vue';
+import { formatDate } from '../../utlis/helpers';
 
 
 const props = defineProps({
@@ -57,6 +58,7 @@ const props = defineProps({
 
 onBeforeMount(()=>{
     getBody();
+    
 })
 
 function getBody(): void {
