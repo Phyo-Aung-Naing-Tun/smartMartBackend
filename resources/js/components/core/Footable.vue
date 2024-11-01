@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div >
         <table class="table-auto w-full">
             <thead>
                 <th
@@ -12,14 +12,25 @@
                  </td>
                 </th>
             </thead>
-            <tbody>
+            <tbody v-if="json?.body">
                 <tr v-for="(body, index) in json.body" :key="index">
                     <td
                         class="border p-2"
                         v-for="(head, index) in json.head"
                         :key="index"
-                    >
-                        {{ body[head] }}
+                    >                        <div  v-if="head === 'profile'">
+                            <img class=" rounded-full shadow  mx-auto w-10 h-10 flex  border border-blue-800" v-if="body[head]" :src="body[head]" />
+                            <div class=" rounded-full shadow bg-white mx-auto w-10 h-10 flex justify-center items-center border border-blue-800">
+                                <FontAwesomeIcon class=" text-xl primary_text" :icon="faUser"/>
+                            </div>
+                        </div>
+                        <span v-else-if="head === 'created at'">
+                            create
+                        </span>
+                        <div v-else-if="head === 'actions'">
+                            actions
+                        </div>
+                        <span v-else>{{ body[head] }}</span> 
                     </td>
                 
                 </tr>
@@ -28,7 +39,11 @@
     </div>
 </template>
 <script setup lang="ts">
-import { required } from "@vuelidate/validators";
+import { icon } from '@fortawesome/fontawesome-svg-core';
+import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { onBeforeMount, onMounted } from 'vue';
+
 
 const props = defineProps({
     json: {
@@ -40,6 +55,10 @@ const props = defineProps({
     },
 });
 
+onBeforeMount(()=>{
+    getBody();
+})
+
 function getBody(): void {
     let rawData: Array = [];
     props.data.forEach((data: any, index: Number) => {
@@ -47,7 +66,9 @@ function getBody(): void {
     });
     props.json.body = rawData;
 }
-getBody();
+
+
+
 
 // function transform(data) {
 //     let raw = [];
