@@ -29,7 +29,9 @@
                            {{ formatDate(body['created_at']) }}
                         </span>
                         <div v-else-if="head === 'actions'">
-                            actions
+                            <FontAwesomeIcon :icon="faEdit" />
+                            <FontAwesomeIcon :icon="faTrash" />
+                            <FontAwesomeIcon :icon="faMagnifyingGlass" />
                         </div>
                         <span v-else>{{ body[head] }}</span> 
                     </td>
@@ -40,9 +42,9 @@
 </template>
 <script setup lang="ts">
 import { icon } from '@fortawesome/fontawesome-svg-core';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faEdit, faMagnifyingGlass, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { onBeforeMount, onMounted } from 'vue';
+import { onBeforeMount, onMounted, ref } from 'vue';
 import { formatDate } from '../../utlis/helpers';
 
 
@@ -55,6 +57,9 @@ const props = defineProps({
         type: Array,
     },
 });
+const actions = ref([
+
+])
 
 onBeforeMount(()=>{
     getBody();
