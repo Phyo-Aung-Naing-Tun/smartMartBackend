@@ -25,15 +25,23 @@
                                 <FontAwesomeIcon class=" text-xl primary_text" :icon="faUser"/>
                             </div>
                         </div>
-                        <span v-else-if="head === 'created at'">
+                        <span class="text-sm" v-else-if="head === 'created at'">
                            {{ formatDate(body['created_at']) }}
                         </span>
-                        <div v-else-if="head === 'actions'">
-                            <FontAwesomeIcon :icon="faEdit" />
-                            <FontAwesomeIcon :icon="faTrash" />
-                            <FontAwesomeIcon :icon="faMagnifyingGlass" />
+                        <div v-else-if="head === 'actions'" class=" grid text-lg grid-cols-3 primary_text">
+                            <div class=" hover:scale-[1.1] transition ease-linear" v-for="(action, index) in body[head]" :key="index">
+                                <router-link v-if="action?.name === 'details'" to="/">
+                                    <FontAwesomeIcon :icon="faMagnifyingGlass" />
+                                </router-link>
+                                <router-link v-else-if="action?.name === 'edit'" to="/">
+                                    <FontAwesomeIcon :icon="faEdit" />
+                                </router-link>
+                                <router-link class="text-red-600" v-else-if="action?.name === 'delete'" to="/">
+                                    <FontAwesomeIcon :icon="faTrash" />
+                                </router-link>
+                            </div> 
                         </div>
-                        <span v-else>{{ body[head] }}</span> 
+                        <span v-else class="text-sm">{{ body[head] }}</span> 
                     </td>
                 </tr>
             </tbody>
@@ -62,35 +70,18 @@ const actions = ref([
 ])
 
 onBeforeMount(()=>{
-    getBody();
-    
+    formatBody();
 })
 
-function getBody(): void {
+function formatBody(): void {
     let rawData: Array = [];
     props.data.forEach((data: any, index: Number) => {
+        if(props.json?.actions){
+            data["actions"] = props.json?.actions?.map((action:any) => action);
+        }
         rawData[index] = data;
+        
     });
-    props.json.body = rawData;
+    props.json.body = rawData;    
 }
-
-
-
-
-// function transform(data) {
-//     let raw = [];
-//     data.data.forEach(
-//         (data, index) =>
-//             (raw[index] = {
-//                 id: data.id,
-//                 profile: data.profile,
-//                 name: data.name,
-//                 email: data.email,
-//                 phone: data.phone,
-//             })
-//     );
-//     json.body = raw;
-//     json.meta = data.meta;
-// }
-// transform(products.value);
 </script>

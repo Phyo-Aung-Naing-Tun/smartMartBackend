@@ -1,6 +1,10 @@
 {
     "head": ["profile", "name", "email", "phone", "created at", "actions"],
     "body": [],
-    "actions": ["details", "edit"],
+    "actions": [
+        { "name": "details", "link": "" },
+        { "name": "edit", "link": "" },
+        { "name": "delete", "link": "" }
+    ],
     "meta": {}
 }
