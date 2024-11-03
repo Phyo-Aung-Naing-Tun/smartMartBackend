@@ -48,7 +48,7 @@
         </table>
         <div v-if="json?.meta" class=" mt-3 flex justify-end" >
             <div class="border">
-                <button :class="link?.active ? 'primary_bg text-white' : 'hover:bg-gray-200'" class=" px-4 border-e last:border-none  py-2" v-for="(link, index) in json?.meta?.links.slice(1,json?.meta?.links.length-1)" :key="index" :v-html="link.label">
+                <button @click="changePage(link?.url)" :class="link?.active ? 'primary_bg text-white' : 'hover:bg-gray-200'" class=" px-4 border-e last:border-none  py-2" v-for="(link, index) in json?.meta?.links.slice(1,json?.meta?.links.length-1)" :key="index" :v-html="link.label">
                 
                 {{ link?.label }}
             </button>
@@ -60,8 +60,9 @@
 import { icon } from '@fortawesome/fontawesome-svg-core';
 import { faEdit, faMagnifyingGlass, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { onBeforeMount, onMounted, ref } from 'vue';
+import { onBeforeMount, onMounted, ref, watch } from 'vue';
 import { formatDate } from '../../utlis/helpers';
+import apiClient from '../../axios/axiosConfig';
 
 
 const props = defineProps({
@@ -74,10 +75,16 @@ const props = defineProps({
     },
 });
 
+const emits = defineEmits(['paginateData'])
 
+watch(
+    ()=>props.data,
+    ()=>{
+    formatBody();
+    }
+)
 onBeforeMount(()=>{
     formatBody();
-    console.log(props.json.meta);
     
 })
 
@@ -91,5 +98,23 @@ function formatBody(): void {
         
     });
     props.json.body = rawData;    
+}
+
+ 
+function changePage(link:String):void{
+    apiClient.get(link,{
+        params: {
+            per_page : props.json.meta.per_page
+        }
+    })
+    .then(response => {
+        emits("paginateData",response);
+        
+    })
+    .catch(error => {
+        console.log(error);
+        
+    })
+    
 }
 </script>

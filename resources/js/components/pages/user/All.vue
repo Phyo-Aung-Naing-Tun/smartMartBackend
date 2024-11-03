@@ -1,6 +1,11 @@
 <template>
     <div class="px-3 mt-6">
-        <Footable v-if="products" :json="json" :data="products.data" />
+        <Footable
+            v-if="products"
+            :json="json"
+            :data="products.data"
+            @paginateData="getData"
+        />
     </div>
 </template>
 <script setup>
@@ -31,5 +36,10 @@ function getProducts() {
         .finally(() => {
             console.log("finally");
         });
+}
+
+function getData(value) {
+    products.value = value.data;
+    json.meta = products.value?.meta;
 }
 </script>
