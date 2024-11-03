@@ -14,9 +14,15 @@ let products = ref(null);
 onMounted(getProducts);
 function getProducts() {
     apiClient
-        .get("/users")
+        .get("/users", {
+            params: {
+                per_page: 3,
+                page: 2,
+            },
+        })
         .then((response) => {
             products.value = response.data;
+            json.meta = products.value?.meta;
         })
         .catch((error) => {
             notiError("Server Error");

@@ -13,7 +13,7 @@
                 </th>
             </thead>
             <tbody v-if="json?.body.length">
-                <tr v-for="(body, index) in json.body" :key="index">
+                <tr class=" hover:bg-gray-200" v-for="(body, index) in json.body" :key="index">
                     <td
                         class="border p-2"
                         v-for="(head, index) in json.head"
@@ -46,6 +46,14 @@
                 </tr>
             </tbody>
         </table>
+        <div v-if="json?.meta" class=" mt-3 flex justify-end" >
+            <div class="border">
+                <button :class="link?.active ? 'primary_bg text-white' : 'hover:bg-gray-200'" class=" px-4 border-e last:border-none  py-2" v-for="(link, index) in json?.meta?.links.slice(1,json?.meta?.links.length-1)" :key="index" :v-html="link.label">
+                
+                {{ link?.label }}
+            </button>
+            </div>
+        </div>
     </div>
 </template>
 <script setup lang="ts">
@@ -65,12 +73,12 @@ const props = defineProps({
         type: Array,
     },
 });
-const actions = ref([
 
-])
 
 onBeforeMount(()=>{
     formatBody();
+    console.log(props.json.meta);
+    
 })
 
 function formatBody(): void {
