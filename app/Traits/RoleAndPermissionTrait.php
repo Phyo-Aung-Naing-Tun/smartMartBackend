@@ -2,6 +2,7 @@
 
 namespace App\Traits;
 
+use App\Models\User;
 use Spatie\Permission\Models\Role;
 
 trait RoleAndPermissionTrait
@@ -10,5 +11,10 @@ trait RoleAndPermissionTrait
     {
         $role = Role::findByName($name);
         return $role;
+    }
+
+    public function assignRole(User $user,$role)
+    {
+        $user->assignRole($this->getRole($role));
     }
 }

@@ -2,19 +2,26 @@
 
 namespace Database\Seeders;
 
+use App\Enums\UserStatus;
 use App\Models\User;
+use App\Traits\RoleAndPermissionTrait;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
+    use RoleAndPermissionTrait;
     /**
      * Seed the application's database.
      */
     public function run(): void
     {
-        User::factory(10)->create();
+        
         $this->call([RoleSeeder::class, AdminSeeder::class]);
+        $users = User::factory(10)->create();
+        foreach($users as $user){
+            $this->assignRole($user,UserStatus::USER->value);
+        };
 
         // User::factory()->create([
         //     'name' => 'Test User',

@@ -36,9 +36,9 @@
                                 <router-link v-else-if="action?.name === 'edit'" to="/">
                                     <FontAwesomeIcon :icon="faEdit" />
                                 </router-link>
-                                <router-link class="text-red-600" v-else-if="action?.name === 'delete'" to="/">
+                                <button @click="toggleModal" class="text-red-600" v-else-if="action?.name === 'delete'" to="/">
                                     <FontAwesomeIcon :icon="faTrash" />
-                                </router-link>
+                                </button>
                             </div> 
                         </div>
                         <span v-else class="text-sm">{{ body[head] }}</span> 
@@ -54,6 +54,7 @@
             </button>
             </div>
         </div>
+        <CustomModal image="/images/deleteConfrim.gif" title="Confirm Delete" text="Are you sure to delete?" width="500px" :show="openModal" @dismiss="toggleModal" type="confirm"/>
     </div>
 </template>
 <script setup lang="ts">
@@ -63,7 +64,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { onBeforeMount, onMounted, ref, watch } from 'vue';
 import { formatDate } from '../../utlis/helpers';
 import apiClient from '../../axios/axiosConfig';
-
+import CustomModal from './modals/CustomModal.vue';
+const openModal:Boolean = ref(false);
 
 const props = defineProps({
     json: {
@@ -108,13 +110,16 @@ function changePage(link:String):void{
         }
     })
     .then(response => {
-        emits("paginateData",response);
-        
+        emits("paginateData",response);        
     })
     .catch(error => {
         console.log(error);
         
     })
     
+}
+
+function toggleModal():void{
+    openModal.value = !openModal.value; 
 }
 </script>

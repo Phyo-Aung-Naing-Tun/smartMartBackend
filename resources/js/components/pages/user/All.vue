@@ -21,8 +21,8 @@ function getProducts() {
     apiClient
         .get("/users", {
             params: {
-                per_page: 3,
-                page: 2,
+                per_page: 5,
+                page: 1,
             },
         })
         .then((response) => {

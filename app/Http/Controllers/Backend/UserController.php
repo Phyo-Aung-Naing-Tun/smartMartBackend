@@ -3,20 +3,25 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\Backend\UserResource;
 use App\Models\User;
+use App\Repositories\Backend\UserRepository;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+
+    private $repo;
+
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->repo = $userRepository;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $per_page = $request->per_page ?? 5;
-        $page = $request->page ?? 1;
-        return UserResource::collection(User::paginate($per_page,['*'],'page',$page));
+       return $this->repo->index($request);
     }
 
     /**

@@ -24,7 +24,6 @@ class AdminSeeder extends Seeder
             'address' => 'No(10),First Floor,Singngu,Insein,Yangon',
             'remember_token' => Str::random(10),
         ]);
-        $role = $this->getRole(UserStatus::ADMIN->value);
-        $user->assignRole($role);
+        $this->assignRole($user,UserStatus::ADMIN->value);
     }
 }

@@ -38,16 +38,49 @@
                                 {{ title }}
                             </DialogTitle>
                             <div class="mt-2">
-                                <slot></slot>
+                                <img
+                                    class="w-[230px] my-3 mx-auto"
+                                    v-if="image"
+                                    :src="`${domain}/storage${image}`"
+                                    alt="image"
+                                />
+                                <p
+                                    v-if="text"
+                                    class="my-3 text-lg text-center text-gray-600"
+                                >
+                                    {{ text }}
+                                </p>
                             </div>
 
-                            <div class="mt-4">
+                            <div
+                                class="mt-5 flex justify-end gap-2"
+                                v-if="type === 'confirm'"
+                            >
+                                <button
+                                    type="button"
+                                    class="inline-flex justify-center rounded-md border border-transparent bg-red-200 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-500 focus:outline-none hover:text-white focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+                                    @click="closeModal"
+                                >
+                                    Cancle
+                                </button>
                                 <button
                                     type="button"
                                     class="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                     @click="closeModal"
                                 >
-                                    Got it, thanks!
+                                    Confirm
+                                </button>
+                            </div>
+                            <div
+                                class="mt-5 flex justify-center"
+                                v-if="type === 'alert'"
+                            >
+                                <button
+                                    type="button"
+                                    class="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                    @click="closeModal"
+                                >
+                                    OK
                                 </button>
                             </div>
                         </DialogPanel>
@@ -67,10 +100,12 @@ import {
     DialogPanel,
     DialogTitle,
 } from "@headlessui/vue";
+import { faL } from "@fortawesome/free-solid-svg-icons";
 
 const isOpen = ref(false);
 // const width = ref("500px");
 const emits = defineEmits(["dismiss"]);
+const domain = ref(import.meta.env.VITE_IMAGE_BASE_URL);
 const props = defineProps({
     width: {
         type: String,
@@ -79,7 +114,18 @@ const props = defineProps({
         type: String,
         default: null,
     },
+    type: {
+        type: String,
+        default: "confirm",
+    },
+    image: {
+        type: String,
+    },
+    text: {
+        type: String,
+    },
 });
+console.log(domain.value);
 
 function closeModal() {
     emits("dismiss", true);
