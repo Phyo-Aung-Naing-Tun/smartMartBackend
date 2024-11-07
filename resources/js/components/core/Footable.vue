@@ -30,15 +30,15 @@
                         </span>
                         <div v-else-if="head === 'actions'" class=" grid text-lg grid-cols-3 primary_text">
                             <div class=" hover:scale-[1.1] transition ease-linear" v-for="(action, index) in body[head]" :key="index">
-                                <Button v-if="action?.name === 'details'" link="/">
+                                <Button v-if="action?.name === 'details'" :link="`${action?.link + action?.id}`">
                                     <FontAwesomeIcon :icon="faMagnifyingGlass" />
                                 </Button>
                                     
-                                <Button v-else-if="action?.name === 'edit'" link="/">
+                                <Button v-else-if="action?.name === 'edit'" :link="`${action?.link + action?.id}`">
                                     <FontAwesomeIcon :icon="faEdit" />
                                 </Button>
                                     
-                                <Button @click="toggleModal" classes="text-red-600" v-else-if="action?.name === 'delete'" to="/">
+                                <Button @click="toggleModal" classes="text-red-600" v-else-if="action?.name === 'delete'" >
                                     <FontAwesomeIcon :icon="faTrash" />
                                 </Button>
                             </div> 
@@ -69,7 +69,7 @@ import apiClient from '../../axios/axiosConfig';
 import CustomModal from './modals/CustomModal.vue';
 import Button from './Button.vue';
 const openModal:Boolean = ref(false);
-
+const targetId = ref(null);
 const props = defineProps({
     json: {
         requierd: true,
@@ -90,6 +90,8 @@ watch(
 )
 onBeforeMount(()=>{
     formatBody();
+    console.log(props.json);
+    
     
 })
 
@@ -97,7 +99,10 @@ function formatBody(): void {
     let rawData: Array = [];
     props.data.forEach((data: any, index: Number) => {
         if(props.json?.actions){
-            data["actions"] = props.json?.actions?.map((action:any) => action);
+            data["actions"] = props.json?.actions?.map((action:any) => {
+                action.id = data?.id
+               return action;
+            });
         }
         rawData[index] = data;
         
@@ -122,7 +127,8 @@ function changePage(link:String):void{
     
 }
 
-function toggleModal():void{
+function toggleModal(value:number|boolean):void{
+    targetId.value = value;
     openModal.value = !openModal.value; 
 }
 </script>
