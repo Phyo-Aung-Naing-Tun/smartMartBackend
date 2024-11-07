@@ -90,8 +90,8 @@ function login() {
             }
         })
         .catch((error) => {
-            notiError(error.response.data.message);
-            console.log(error.response.data.message);
+            notiError(error.response?.data?.message);
+            console.log(error.response?.data?.message);
         })
         .finally(() => {
             isLoading.value = false;

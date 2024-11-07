@@ -36,6 +36,10 @@ export function formatDate(time) {
     } , ${date.getFullYear()}`;
 }
 
+export function getDomain() {
+    return import.meta.env.VITE_IMAGE_BASE_URL;
+}
+
 export default {
     notiSuccess,
     notiError,

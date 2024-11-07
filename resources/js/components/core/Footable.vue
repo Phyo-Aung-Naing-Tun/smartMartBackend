@@ -30,15 +30,17 @@
                         </span>
                         <div v-else-if="head === 'actions'" class=" grid text-lg grid-cols-3 primary_text">
                             <div class=" hover:scale-[1.1] transition ease-linear" v-for="(action, index) in body[head]" :key="index">
-                                <router-link v-if="action?.name === 'details'" to="/">
+                                <Button v-if="action?.name === 'details'" link="/">
                                     <FontAwesomeIcon :icon="faMagnifyingGlass" />
-                                </router-link>
-                                <router-link v-else-if="action?.name === 'edit'" to="/">
+                                </Button>
+                                    
+                                <Button v-else-if="action?.name === 'edit'" link="/">
                                     <FontAwesomeIcon :icon="faEdit" />
-                                </router-link>
-                                <button @click="toggleModal" class="text-red-600" v-else-if="action?.name === 'delete'" to="/">
+                                </Button>
+                                    
+                                <Button @click="toggleModal" classes="text-red-600" v-else-if="action?.name === 'delete'" to="/">
                                     <FontAwesomeIcon :icon="faTrash" />
-                                </button>
+                                </Button>
                             </div> 
                         </div>
                         <span v-else class="text-sm">{{ body[head] }}</span> 
@@ -65,6 +67,7 @@ import { onBeforeMount, onMounted, ref, watch } from 'vue';
 import { formatDate } from '../../utlis/helpers';
 import apiClient from '../../axios/axiosConfig';
 import CustomModal from './modals/CustomModal.vue';
+import Button from './Button.vue';
 const openModal:Boolean = ref(false);
 
 const props = defineProps({

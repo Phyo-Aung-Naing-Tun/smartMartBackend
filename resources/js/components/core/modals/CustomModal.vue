@@ -41,7 +41,7 @@
                                 <img
                                     class="w-[230px] my-3 mx-auto"
                                     v-if="image"
-                                    :src="`${domain}/storage${image}`"
+                                    :src="`${getDomain()}/storage${image}`"
                                     alt="image"
                                 />
                                 <p
@@ -101,11 +101,11 @@ import {
     DialogTitle,
 } from "@headlessui/vue";
 import { faL } from "@fortawesome/free-solid-svg-icons";
+import { getDomain } from "../../../utlis/helpers";
 
 const isOpen = ref(false);
 // const width = ref("500px");
 const emits = defineEmits(["dismiss"]);
-const domain = ref(import.meta.env.VITE_IMAGE_BASE_URL);
 const props = defineProps({
     width: {
         type: String,
@@ -125,7 +125,6 @@ const props = defineProps({
         type: String,
     },
 });
-console.log(domain.value);
 
 function closeModal() {
     emits("dismiss", true);
