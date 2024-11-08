@@ -1,5 +1,8 @@
 <template>
     <div class="px-3 mt-6">
+        <div class="my-4">
+            <SearchInput @getChanges="getChanges" />
+        </div>
         <Footable
             v-if="users"
             :json="json"
@@ -14,6 +17,7 @@ import json from "../../../directives/user.json";
 import apiClient from "../../../axios/axiosConfig";
 import { ref, onMounted, watch } from "vue";
 import { notiError } from "../../../utlis/helpers";
+import SearchInput from "../../ui/SearchInput.vue";
 let users = ref(null);
 
 onMounted(() => {
@@ -44,5 +48,9 @@ function getUsers() {
 function getData(value) {
     users.value = value.data;
     json.meta = users.value?.meta;
+}
+
+function getChanges(value) {
+    console.log(value);
 }
 </script>
