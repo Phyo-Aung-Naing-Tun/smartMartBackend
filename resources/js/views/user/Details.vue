@@ -1,3 +1,3 @@
 <template>
-    <div>edit</div>
+    <div>details</div>
 </template>

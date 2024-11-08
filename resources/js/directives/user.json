@@ -1,9 +1,17 @@
 {
-    "head": ["profile", "name", "email", "phone", "created at", "actions"],
+    "head": [
+        "no",
+        "profile",
+        "name",
+        "email",
+        "phone",
+        "created at",
+        "actions"
+    ],
     "body": [],
     "actions": [
         { "id": null, "name": "details", "link": "/users/" },
-        { "id": null, "name": "edit", "link": "/users/" },
+        { "id": null, "name": "edit", "link": "/users/user/" },
         { "id": null, "name": "delete", "link": "/user" }
     ],
     "meta": {}

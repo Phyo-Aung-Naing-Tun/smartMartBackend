@@ -13,7 +13,7 @@
                 </th>
             </thead>
             <tbody v-if="json?.body.length">
-                <tr class=" hover:bg-gray-200" v-for="(body, index) in json.body" :key="index">
+                <tr class=" hover:bg-gray-200" v-for="(body, bodyIndex) in json.body" :key="bodyIndex">
                     <td
                         class="border p-2"
                         v-for="(head, index) in json.head"
@@ -43,6 +43,7 @@
                                 </Button>
                             </div> 
                         </div>
+                        <div  v-else-if="head === 'no'" class="text-sm text-center">{{ generateNo(bodyIndex) }}</div>
                         <span v-else class="text-sm">{{ body[head] }}</span> 
                     </td>
                 </tr>
@@ -130,5 +131,17 @@ function changePage(link:String):void{
 function toggleModal(value:number|boolean):void{
     targetId.value = value;
     openModal.value = !openModal.value; 
+}
+
+function generateNo(data:number):number{
+    console.log(data);
+    
+let perPage = props.json.meta.per_page;
+ let currentPage = props.json.meta.current_page
+ if(currentPage > 1){
+ return (data + 1) + ((currentPage - 1) * perPage)
+ }else{
+    return data + 1;
+ }
 }
 </script>
