@@ -19,7 +19,7 @@ class UserResource extends JsonResource
         //user will have only one role
         return [
             'id' => hash_id($this->id),
-            'roles' => $this->getRoleNames()[0],
+            'role' => $this->getRoleNames()[0],
             'name' => $this->name,
             'email' => $this->email,
             'phone' => $this->phone,

@@ -1,10 +1,11 @@
 <template>
     <div class="px-3 mt-6">
-        <div class="my-4 grid grid-cols-4">
+        <div class="my-4 grid grid-cols-4 gap-5">
             <SearchInput
                 classes="focus:outline-blue-900 rounded"
                 @getChanges="getChanges"
             />
+            <DropDown classes="rounded" />
         </div>
         <Footable
             v-if="users"
@@ -21,6 +22,7 @@ import apiClient from "../../../axios/axiosConfig";
 import { ref, onMounted, inject } from "vue";
 import { notiError } from "../../../utlis/helpers";
 import SearchInput from "../../ui/SearchInput.vue";
+import DropDown from "../../core/DropDown.vue";
 let users = ref(null);
 let useDebounce = inject("useDebounce");
 onMounted(() => {
@@ -31,7 +33,7 @@ function getUsers(search = null) {
     apiClient
         .get("/users", {
             params: {
-                per_page: 5,
+                per_page: 7,
                 page: 1,
                 search: search,
             },

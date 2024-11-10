@@ -6,6 +6,7 @@
         "email",
         "phone",
         "created at",
+        "role",
         "actions"
     ],
     "body": [],
