@@ -28,6 +28,7 @@ let useDebounce = inject("useDebounce");
 const dropdownData = ref([]);
 onMounted(() => {
     getUsers();
+    getRoles();
 });
 
 function getUsers(search = null) {
@@ -46,9 +47,6 @@ function getUsers(search = null) {
         .catch((error) => {
             notiError("Server Error");
             console.log(error);
-        })
-        .finally(() => {
-            console.log("finally");
         });
 }
 
@@ -61,5 +59,17 @@ function getChanges(value) {
     useDebounce(() => {
         getUsers(value);
     }, 500);
+}
+
+function getRoles() {
+    apiClient
+        .get("/roles")
+        .then((response) => {
+            console.log(response);
+        })
+        .catch((error) => {
+            notiError("Server Error");
+            console.log(error);
+        });
 }
 </script>
