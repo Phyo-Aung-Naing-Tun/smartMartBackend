@@ -27,12 +27,13 @@ onMounted(() => {
     getUsers();
 });
 
-function getUsers() {
+function getUsers(search = null) {
     apiClient
         .get("/users", {
             params: {
                 per_page: 5,
                 page: 1,
+                search: search,
             },
         })
         .then((response) => {
@@ -55,7 +56,7 @@ function getData(value) {
 
 function getChanges(value) {
     useDebounce(() => {
-        console.log("hello");
+        getUsers(value);
     }, 500);
 }
 </script>
