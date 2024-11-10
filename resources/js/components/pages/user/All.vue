@@ -19,12 +19,13 @@
 import Footable from "../../core/Footable.vue";
 import json from "../../../directives/user.json";
 import apiClient from "../../../axios/axiosConfig";
-import { ref, onMounted, inject } from "vue";
+import { ref, onMounted, inject, reactive } from "vue";
 import { notiError } from "../../../utlis/helpers";
 import SearchInput from "../../ui/SearchInput.vue";
 import DropDown from "../../core/DropDown.vue";
 let users = ref(null);
 let useDebounce = inject("useDebounce");
+const dropdownData = ref([]);
 onMounted(() => {
     getUsers();
 });

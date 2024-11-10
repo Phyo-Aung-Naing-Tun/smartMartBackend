@@ -17,4 +17,7 @@ trait RoleAndPermissionTrait
     {
         $user->assignRole($this->getRole($role));
     }
+
+
+    
 }

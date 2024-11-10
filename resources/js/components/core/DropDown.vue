@@ -1,6 +1,8 @@
 <template>
-    <div>
-        <input v-bind="attributes" type="text" />
+    <div class="relative">
+        <div @click="hello">
+            <div v-bind="attributes">All</div>
+        </div>
     </div>
 </template>
 <script setup lang="ts">
@@ -17,4 +19,7 @@ const attributes: object = computed(() => {
         disabled: true,
     };
 });
+function hello() {
+    console.log("hello");
+}
 </script>
