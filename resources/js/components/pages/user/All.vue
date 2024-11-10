@@ -1,7 +1,10 @@
 <template>
     <div class="px-3 mt-6">
-        <div class="my-4">
-            <SearchInput @getChanges="getChanges" />
+        <div class="my-4 grid grid-cols-4">
+            <SearchInput
+                classes="focus:outline-blue-900 rounded"
+                @getChanges="getChanges"
+            />
         </div>
         <Footable
             v-if="users"
@@ -15,11 +18,11 @@
 import Footable from "../../core/Footable.vue";
 import json from "../../../directives/user.json";
 import apiClient from "../../../axios/axiosConfig";
-import { ref, onMounted, watch } from "vue";
+import { ref, onMounted, inject } from "vue";
 import { notiError } from "../../../utlis/helpers";
 import SearchInput from "../../ui/SearchInput.vue";
 let users = ref(null);
-
+let useDebounce = inject("useDebounce");
 onMounted(() => {
     getUsers();
 });
@@ -51,6 +54,8 @@ function getData(value) {
 }
 
 function getChanges(value) {
-    console.log(value);
+    useDebounce(() => {
+        console.log("hello");
+    }, 500);
 }
 </script>

@@ -90,10 +90,7 @@ watch(
     }
 )
 onBeforeMount(()=>{
-    formatBody();
-    console.log(props.json);
-    
-    
+    formatBody();    
 })
 
 function formatBody(): void {
@@ -133,9 +130,7 @@ function toggleModal(value:number|boolean):void{
     openModal.value = !openModal.value; 
 }
 
-function generateNo(data:number):number{
-    console.log(data);
-    
+function generateNo(data:number):number{    
 let perPage = props.json.meta.per_page;
  let currentPage = props.json.meta.current_page
  if(currentPage > 1){

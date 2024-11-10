@@ -24,13 +24,6 @@ class UserController extends Controller
        return $this->repo->index($request);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * Display the specified resource.

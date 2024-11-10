@@ -5,9 +5,11 @@ import app from "./app.vue";
 import { router } from "./router";
 import apiClient from "./axios/axiosConfig";
 import VOtpInput from "vue3-otp-input";
+import useDebounce from "./plugins/useDebounce";
 
 const data = createApp(app);
 data.config.globalProperties.$axios = apiClient;
+data.use(useDebounce);
 data.use(router);
 data.component("v-otp-input", VOtpInput);
 data.mount("#app");
