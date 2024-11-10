@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Backend\UserController;
+use App\Models\User;
 
 Route::get('/user', function (Request $request) {
     return $request->user();

@@ -16,9 +16,10 @@ class UserResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        
+        //user will have only one role
         return [
             'id' => hash_id($this->id),
+            'roles' => $this->getRoleNames()[0],
             'name' => $this->name,
             'email' => $this->email,
             'phone' => $this->phone,
