@@ -5,7 +5,11 @@
                 classes="focus:outline-blue-900 rounded"
                 @getChanges="getChanges"
             />
-            <DropDown classes="rounded" />
+            <DropDown
+                classes="rounded"
+                :data="dropdownData"
+                @selectValue="filter"
+            />
         </div>
         <Footable
             v-if="users"
@@ -20,7 +24,7 @@ import Footable from "../../core/Footable.vue";
 import json from "../../../directives/user.json";
 import apiClient from "../../../axios/axiosConfig";
 import { ref, onMounted, inject, reactive } from "vue";
-import { notiError } from "../../../utlis/helpers";
+import { notiError, transformDropDownData } from "../../../utlis/helpers";
 import SearchInput from "../../ui/SearchInput.vue";
 import DropDown from "../../core/DropDown.vue";
 let users = ref(null);
@@ -65,11 +69,22 @@ function getRoles() {
     apiClient
         .get("/roles")
         .then((response) => {
-            console.log(response);
+            dropdownData.value = response.data.data.map((data) =>
+                transformDropDownData(data.id, data.name, false)
+            );
+            dropdownData.value.unshift({
+                key: "all",
+                value: "All",
+                active: true,
+            });
         })
         .catch((error) => {
             notiError("Server Error");
             console.log(error);
         });
+}
+
+function filter(value) {
+    console.log(value);
 }
 </script>

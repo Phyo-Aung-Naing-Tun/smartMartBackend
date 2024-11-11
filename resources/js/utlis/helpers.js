@@ -40,8 +40,17 @@ export function getDomain() {
     return import.meta.env.VITE_IMAGE_BASE_URL;
 }
 
+export function transformDropDownData(key, value, active) {
+    return {
+        key,
+        value,
+        active,
+    };
+}
+
 export default {
     notiSuccess,
     notiError,
     formatDate,
+    transformDropDownData,
 };
