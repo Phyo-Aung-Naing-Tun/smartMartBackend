@@ -29,19 +29,22 @@ import SearchInput from "../../ui/SearchInput.vue";
 import DropDown from "../../core/DropDown.vue";
 let users = ref(null);
 let useDebounce = inject("useDebounce");
+let searchValue = ref(null);
+let roleValue = ref(null);
 const dropdownData = ref([]);
 onMounted(() => {
     getUsers();
     getRoles();
 });
 
-function getUsers(search = null) {
+function getUsers(search = null, role = null) {
     apiClient
         .get("/users", {
             params: {
                 per_page: 7,
                 page: 1,
                 search: search,
+                role: role,
             },
         })
         .then((response) => {
@@ -61,7 +64,8 @@ function getData(value) {
 
 function getChanges(value) {
     useDebounce(() => {
-        getUsers(value);
+        searchValue.value = value;
+        getUsers(searchValue.value, roleValue.value);
     }, 500);
 }
 
@@ -85,6 +89,7 @@ function getRoles() {
 }
 
 function filter(value) {
-    console.log(value);
+    roleValue.value = value !== "all" ? value : null;
+    getUsers(searchValue.value, roleValue.value);
 }
 </script>
