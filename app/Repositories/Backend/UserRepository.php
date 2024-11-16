@@ -4,6 +4,7 @@ namespace App\Repositories\Backend;
 use App\Http\Resources\Backend\UserResource;
 use App\Http\Responses\BaseResponse;
 use App\Models\User;
+use Exception;
 
 class UserRepository{
     private $response;
@@ -33,6 +34,16 @@ class UserRepository{
        } catch (\Throwable $e) {
         return $this->response->error($e->getMessage(),500);
        }
+    }
+
+    public function show($id)
+    {
+        try{
+            $user = User::findOrFail(unhash_id($id));
+            return $this->response->success(UserResource::make($user),"Operation Success",200);
+        }catch(Exception $e){
+            return $this->response->error($e->getMessage(),500);
+        }
     }
 
 }
