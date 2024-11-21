@@ -26,12 +26,16 @@ Route::middleware(['auth:sanctum'])->prefix('profile')->group(
 );
 
 Route::middleware(['auth:sanctum'])->prefix('users')->group(
-    function(){
-        Route::get('/',[UserController::class, 'index']);
-        Route::get('/{id}',[UserController::class,'show']);
+    function () {
+        Route::get('/', [UserController::class, 'index']);
+        Route::get('/{id}', [UserController::class, 'show']);
     }
 );
 
-Route::middleware(['auth:sanctum'])->group(function(){
-    Route::get('/roles',[RoleAndPermissionController::class, 'showRoles']);
+Route::middleware(['auth:sanctum'])->group(function () {
+    Route::get('/roles', [RoleAndPermissionController::class, 'showRoles']);
+});
+
+Route::get('example', function () {
+    dd('Here');
 });
