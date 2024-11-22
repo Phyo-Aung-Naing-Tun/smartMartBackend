@@ -21,6 +21,7 @@ class AdminSeeder extends Seeder
             'phone' => '09783538348',
             'password' => Hash::make('admin@123'),
             'email_verified_at' => now(),
+            'active_at' => now(),
             'address' => 'No(10),First Floor,Singngu,Insein,Yangon',
             'remember_token' => Str::random(10),
         ]);

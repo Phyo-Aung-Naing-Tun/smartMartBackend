@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('profile')->nullable();
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('nrc_front')->nullable();
+            $table->string('nrc_back')->nullable();
+            $table->text('status')->default('active');
             $table->integer('otp')->nullable();
             $table->text('phone')->unique();
             $table->timestamp('email_verified_at')->nullable();
@@ -23,6 +26,9 @@ return new class extends Migration
             $table->text('address')->nullable();
             $table->rememberToken();
             $table->timestamp('otp_expired_at')->nullable();
+            $table->timestamp('active_at')->nullable();
+            $table->timestamp('inactive_at')->nullable();
+            $table->timestamp('suspended_at')->nullable();
             $table->timestamps();
         });
 

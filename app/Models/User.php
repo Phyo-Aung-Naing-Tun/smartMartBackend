@@ -23,11 +23,17 @@ class User extends Authenticatable
         'name',
         'profile',
         'email',
+        'nrc_front',
+        'nrc_back',
+        'status',
         'phone',
         'password',
         'address',
         'otp',
-        'otp_expired_at'
+        'otp_expired_at',
+        'active_at',
+        'inactive_at',
+        'suspended_at'
     ];
 
     /**
