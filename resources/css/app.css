@@ -2,12 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-.primary_bg{
-    background-color: #1230AE;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
-.primary_text{
-    color: #1230AE;
+
+.primary_bg {
+    background-color: #1230ae;
 }
-.primary_bg{
-    border-color: #1230AE;
+.primary_text {
+    color: #1230ae;
+}
+.primary_bg {
+    border-color: #1230ae;
 }

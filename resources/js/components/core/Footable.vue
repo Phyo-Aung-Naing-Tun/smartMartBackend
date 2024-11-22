@@ -21,7 +21,7 @@
                     >   
                         <div  v-if="head === 'profile'">
                             <img class=" rounded-full shadow  mx-auto w-10 h-10 flex  border border-blue-800" v-if="body[head]" :src="body[head]" />
-                            <div class=" rounded-full shadow bg-white mx-auto w-10 h-10 flex justify-center items-center border border-blue-800">
+                            <div v-else class=" rounded-full shadow bg-white mx-auto w-10 h-10 flex justify-center items-center border border-blue-800">
                                 <FontAwesomeIcon class=" text-xl primary_text" :icon="faUser"/>
                             </div>
                         </div>
@@ -97,11 +97,18 @@ function formatBody(): void {
     let rawData: Array = [];
     props.data.forEach((data: any, index: Number) => {
         if(props.json?.actions){
-            data["actions"] = props.json?.actions?.map((action:any) => {
-                action.id = data?.id
-               return action;
-            });
+            let actions = [];
+            // actions = props.json?.actions?.map((action:any) => {
+            //     action.id = data?.id + data?.name
+            //    return action;
+            // });
+            actions = [  { "id": data?.id, "name": "details", "link": "/users/" },
+        { "id": data?.id, "name": "edit", "link": "/users/user/" },
+        { "id": data?.id, "name": "delete", "link": "/user" }]
+            data["actions"] = actions;
         }
+        console.log(data);
+        
         rawData[index] = data;
         
     });

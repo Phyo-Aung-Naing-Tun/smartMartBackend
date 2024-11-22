@@ -3,7 +3,7 @@
         <img
             class="border mt-20 mb-6 w-[200px] h-[200px] rounded-full shadow"
             v-if="!profile?.profile"
-            src="../../assets/public/images/png/smartmartlogo.png"
+            :src="`${getDomain()}/storage/images/smartmartlogo.png`"
             alt=""
         />
         <img
@@ -34,6 +34,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { icon } from "@fortawesome/fontawesome-svg-core";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { router } from "../../router";
+import { getDomain } from "../../utlis/helpers";
 const profile = ref(null);
 
 onMounted(() => {

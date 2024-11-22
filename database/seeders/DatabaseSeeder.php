@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Enums\UserStatus;
+use App\Models\Product;
 use App\Models\User;
 use App\Traits\RoleAndPermissionTrait;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -22,6 +23,7 @@ class DatabaseSeeder extends Seeder
         foreach($users as $user){
             $this->assignRole($user,UserStatus::USER->value);
         };
+        Product::factory(15)->create();
 
         // User::factory()->create([
         //     'name' => 'Test User',
