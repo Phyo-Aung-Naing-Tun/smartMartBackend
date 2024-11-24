@@ -17,7 +17,8 @@ class ShopFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->company(),
+            // 'seller_id' => User::wh
         ];
     }
 }

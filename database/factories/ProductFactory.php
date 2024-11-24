@@ -18,8 +18,10 @@ class ProductFactory extends Factory
     {
         return [
             "name" => fake()->name(),
+            "shop_id" => ShopFactory::class,
             "image" => fake()->imageUrl(),
-            "price" => fake()->numberBetween(10,1000),
+            "purchase_price" => fake()->numberBetween(10,99),
+            "sale_price" => fake()->numberBetween(100,1000),
             
         ];
     }

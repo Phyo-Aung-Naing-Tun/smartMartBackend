@@ -64,5 +64,10 @@ class User extends Authenticatable
         return $this->hasOne(Shop::class);
     }
 
+
+    public function scopeFilterByRole($query,$role)
+    {
+        return $query->with('roles')->whereHas('roles',function($query)use($role){$query->where('name',$role);});
+    }
     
 }
