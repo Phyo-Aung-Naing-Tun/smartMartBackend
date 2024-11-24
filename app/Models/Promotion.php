@@ -17,4 +17,13 @@ class Promotion extends Model
         'start_date',
         'end_date',
     ];
+
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class);
+    }
+    public function products()
+    {
+        return $this->belongsToMany(Product::class)->withPivot('product_id');
+    }
 }

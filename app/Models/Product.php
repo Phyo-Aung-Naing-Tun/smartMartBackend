@@ -19,4 +19,9 @@ class Product extends Model
     {
         return $this->belongsTo(Shop::class);
     }
+
+    public function promotions()
+    {
+        return $this->belongsToMany(Promotion::class)->withPivot('promotion_id');
+    }
 }
