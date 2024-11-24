@@ -36,6 +36,7 @@ export function formatDate(time) {
     } , ${date.getFullYear()}`;
 }
 
+//to easily show image
 export function getDomain() {
     return import.meta.env.VITE_IMAGE_BASE_URL;
 }
@@ -48,9 +49,25 @@ export function transformDropDownData(key, value, active) {
     };
 }
 
+//action generator for footable
+export function generateActions(actions, targetId) {
+    let result = [];
+    if (actions?.length) {
+        actions.forEach((action, i) => {
+            result.push({
+                id: i,
+                name: action?.name,
+                link: action.link + targetId,
+            });
+        });
+    }
+    return result;
+}
+
 export default {
     notiSuccess,
     notiError,
     formatDate,
     transformDropDownData,
+    generateActions,
 };

@@ -11,9 +11,9 @@
     ],
     "body": [],
     "actions": [
-        { "id": null, "name": "details", "link": "/users/" },
-        { "id": null, "name": "edit", "link": "/users/user/" },
-        { "id": null, "name": "delete", "link": "/user" }
+        { "name": "details", "link": "/users/" },
+        { "name": "edit", "link": "/users/user/" },
+        { "name": "delete", "link": "/user" }
     ],
     "meta": {}
 }

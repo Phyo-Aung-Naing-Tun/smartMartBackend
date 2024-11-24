@@ -2,11 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Enums\UserStatus;
-use App\Models\Product;
-use App\Models\User;
 use App\Traits\RoleAndPermissionTrait;
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder

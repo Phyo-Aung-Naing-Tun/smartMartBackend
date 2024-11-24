@@ -27,6 +27,13 @@ const props = defineProps({
     data: {
         type: Array,
         required: true,
+        default: [
+            {
+                key: "all",
+                value: "All",
+                active: true,
+            },
+        ],
     },
 
     classes: {

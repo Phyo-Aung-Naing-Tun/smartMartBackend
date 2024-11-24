@@ -28,13 +28,14 @@
                         <span class="text-sm" v-else-if="head === 'created at'">
                            {{ formatDate(body['created_at']) }}
                         </span>
-                        <div v-else-if="head === 'actions'" class=" grid text-lg grid-cols-3 primary_text">
+                        <div v-else-if="head === 'actions'" >
+                          <div v-if="body[head]?.length" class=" grid text-lg grid-cols-3 primary_text">
                             <div class=" hover:scale-[1.1] transition ease-linear" v-for="(action, index) in body[head]" :key="index">
-                                <Button v-if="action?.name === 'details'" :link="`${action?.link + action?.id}`">
+                                <Button v-if="action?.name === 'details'" :link="`${action?.link}`">
                                     <FontAwesomeIcon :icon="faMagnifyingGlass" />
                                 </Button>
                                     
-                                <Button v-else-if="action?.name === 'edit'" :link="`${action?.link + action?.id}`">
+                                <Button v-else-if="action?.name === 'edit'" :link="`${action?.link}`">
                                     <FontAwesomeIcon :icon="faEdit" />
                                 </Button>
                                     
@@ -42,6 +43,10 @@
                                     <FontAwesomeIcon :icon="faTrash" />
                                 </Button>
                             </div> 
+                          </div>
+                          <div v-else class="test-sm tracking-wide text-red-400">
+                            Need Action data!
+                          </div>
                         </div>
                         <div  v-else-if="head === 'no'" class="text-sm text-center">{{ generateNo(bodyIndex) }}</div>
                         <span v-else class="text-sm">{{ body[head] }}</span> 
@@ -65,7 +70,7 @@ import { icon } from '@fortawesome/fontawesome-svg-core';
 import { faEdit, faMagnifyingGlass, faTrash, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { onBeforeMount, onMounted, ref, watch } from 'vue';
-import { formatDate } from '../../utlis/helpers';
+import { formatDate, generateActions } from '../../utlis/helpers';
 import apiClient from '../../axios/axiosConfig';
 import CustomModal from './modals/CustomModal.vue';
 import Button from './Button.vue';
@@ -89,6 +94,7 @@ watch(
     formatBody();
     }
 )
+
 onBeforeMount(()=>{
     formatBody();    
 })
@@ -97,20 +103,9 @@ function formatBody(): void {
     let rawData: Array = [];
     props.data.forEach((data: any, index: Number) => {
         if(props.json?.actions){
-            let actions = [];
-            // actions = props.json?.actions?.map((action:any) => {
-            //     action.id = data?.id + data?.name
-            //    return action;
-            // });
-            actions = [  { "id": data?.id, "name": "details", "link": "/users/" },
-        { "id": data?.id, "name": "edit", "link": "/users/user/" },
-        { "id": data?.id, "name": "delete", "link": "/user" }]
-            data["actions"] = actions;
+            data["actions"] =  generateActions(props.json?.actions,data?.id);
         }
-        console.log(data);
-        
         rawData[index] = data;
-        
     });
     props.json.body = rawData;    
 }
