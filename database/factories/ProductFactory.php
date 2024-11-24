@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Shop;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,7 +19,7 @@ class ProductFactory extends Factory
     {
         return [
             "name" => fake()->name(),
-            "shop_id" => ShopFactory::class,
+            "shop_id" => Shop::pluck('id')->random(),
             "image" => fake()->imageUrl(),
             "purchase_price" => fake()->numberBetween(10,99),
             "sale_price" => fake()->numberBetween(100,1000),

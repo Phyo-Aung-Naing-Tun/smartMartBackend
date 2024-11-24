@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('description_images')->nullable();
             $table->string('purchase_price');
             $table->string('sale_price');
+            $table->enum('status',['pending','active','suspend','bann'])->default('pending');
+            $table->boolean('show_on_smartmart')->default(false);
             $table->timestamps();
         });
     }

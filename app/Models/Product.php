@@ -14,6 +14,8 @@ class Product extends Model
         'image',
         'description_images',
         'purchase_price',
+        'status',
+        'show_on_smartmart',
         'sale_price'
     ];
 
