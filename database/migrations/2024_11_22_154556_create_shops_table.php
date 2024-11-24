@@ -1,5 +1,7 @@
 <?php
 
+use App\Enums\ShopStatus;
+use App\Enums\ShopType;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -22,8 +24,11 @@ return new class extends Migration
             $table->string('about');
             $table->string('address')->nullable();
             $table->string('slogan')->nullable();
-            $table->text('type')->default('normal');
+            $table->text('type')->default(ShopType::NORMAL->value);
+            $table->text('status')->default(ShopStatus::PENDING->value);
             $table->string('schedule')->nullable();
+            $table->timestamp('active_at')->nullable();
+            $table->timestamp('suspended_at')->nullable();
             $table->timestamps();
         });
     }

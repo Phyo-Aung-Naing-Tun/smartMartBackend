@@ -18,12 +18,17 @@ class Shop extends Model
         "profile",
         "slogan",
         "type",
+        "status",
         "schedule"
-
     ];
 
     public function seller()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function products()
+    {
+        return $this->hasMany(Product::class);
     }
 }
