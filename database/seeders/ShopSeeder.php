@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Shop;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class ShopSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        Shop::factory(10)->create();
     }
 }

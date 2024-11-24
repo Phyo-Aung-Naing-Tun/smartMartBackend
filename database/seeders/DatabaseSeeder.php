@@ -18,11 +18,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         
-        $this->call([RoleSeeder::class, AdminSeeder::class]);
-        $users = User::factory(10)->create();
-        foreach($users as $user){
-            $this->assignRole($user,UserStatus::USER->value);
-        };
+        $this->call([RoleSeeder::class, AdminSeeder::class, UserSeeder::class, SellerSeeder::class,ShopSeeder::class]);
+       
         // Product::factory(15)->create();
 
         // User::factory()->create([
