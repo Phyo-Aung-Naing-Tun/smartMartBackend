@@ -1,5 +1,6 @@
 <template>
     <div class="px-3 mt-6">
+        <Navigator :data="navigatorData" />
         <div class="my-4 grid grid-cols-4 gap-5">
             <SearchInput
                 classes="focus:outline-blue-900 rounded"
@@ -27,10 +28,15 @@ import { ref, onMounted, inject, reactive } from "vue";
 import { notiError, transformDropDownData } from "../../../utlis/helpers";
 import SearchInput from "../../ui/SearchInput.vue";
 import DropDown from "../../core/DropDown.vue";
+import Navigator from "../../core/Navigator.vue";
+import { useRoute } from "vue-router";
 let users = ref(null);
 let useDebounce = inject("useDebounce");
 let searchValue = ref(null);
 let roleValue = ref(null);
+
+const navigatorData = ref([{ name: "Users", link: "/users", current: true }]);
+
 const dropdownData = ref([]);
 onMounted(() => {
     getUsers();
