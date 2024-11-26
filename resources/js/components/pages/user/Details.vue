@@ -1,12 +1,8 @@
 <template>
-    <div class="p-5">
+    <div class="p-5 space-y-10">
         <Navigator :data="navigatorData" />
-        <div>
-            <ProfileCard :user="user" />
-        </div>
-        <div>
-            <ShopCard :user="user" />
-        </div>
+        <ProfileCard v-if="user" :user="user" />
+        <ShopCard v-if="user?.shop_id" :shopId="user?.shop_id" />
     </div>
 </template>
 <script setup>
