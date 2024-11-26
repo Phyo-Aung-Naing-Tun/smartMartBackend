@@ -21,7 +21,7 @@ class UserRepository{
         $page = $request->page ?? 1;
         $value = $request->search;
         $role = $request->role;
-        $users = User::with('roles')->when($value, function ($query, $value) {
+        $users = User::with('roles','shop')->when($value, function ($query, $value) {
             $query->where('name', 'like', "%$value%")
              ->orWhere('email', 'like', "%$value%")
              ->orWhere('phone', 'like', "%$value%");
@@ -39,7 +39,7 @@ class UserRepository{
     public function show($id)
     {
         try{
-            $user = User::findOrFail(unhash_id($id));
+            $user = User::with('shop')->findOrFail(unhash_id($id));
             return $this->response->success(UserResource::make($user),"Operation Success",200);
         }catch(Exception $e){
             return $this->response->error($e->getMessage(),500);

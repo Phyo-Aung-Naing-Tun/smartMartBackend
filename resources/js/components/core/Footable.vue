@@ -29,7 +29,7 @@
                            {{ formatDate(body['created_at']) }}
                         </span>
                         <div v-else-if="head === 'actions'" >
-                          <div v-if="body[head]?.length" class=" grid text-lg grid-cols-3 primary_text">
+                          <div v-if="body[head]?.length" class=" grid text-lg grid-cols-3 primary_text gap-2">
                             <div class=" hover:scale-[1.1] transition ease-linear" v-for="(action, index) in body[head]" :key="index">
                                 <Button v-if="action?.name === 'details'" :link="`${action?.link}`">
                                     <FontAwesomeIcon :icon="faMagnifyingGlass" />
