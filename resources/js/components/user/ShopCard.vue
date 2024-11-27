@@ -3,13 +3,13 @@
         <h1 class="text-gray-800 mb-4 text-lg tracking-wide font-bold">
             User's Shop
         </h1>
-        <div>{{ shopId }}</div>
+        <pre>{{ shop }}</pre>
     </div>
 </template>
 <script setup>
-const { shopId } = defineProps({
-    shopId: {
-        type: String,
+const { shop } = defineProps({
+    shop: {
+        type: Object,
         required: true,
     },
 });
