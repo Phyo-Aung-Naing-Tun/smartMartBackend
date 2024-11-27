@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Backend\RoleAndPermissionController;
+use App\Http\Controllers\Backend\ShopController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -36,6 +37,4 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('/roles', [RoleAndPermissionController::class, 'showRoles']);
 });
 
-Route::get('example', function () {
-    dd('Here');
-});
+Route::get('/shop/{id}', [ShopController::class,'show']);
