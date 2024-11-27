@@ -49,6 +49,15 @@ export function transformDropDownData(key, value, active) {
     };
 }
 
+export function generateBadgeClass(status) {
+    let classes = {
+        active: "badge-green",
+        suspend: "badge-red",
+        pending: "badge-yellow",
+    };
+    return classes[status];
+}
+
 //action generator for footable
 export function generateActions(actions, targetId) {
     let result = [];
@@ -70,4 +79,5 @@ export default {
     formatDate,
     transformDropDownData,
     generateActions,
+    generateBadgeClass,
 };

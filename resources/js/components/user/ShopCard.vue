@@ -22,15 +22,16 @@
                     </div>
                 </div>
                 <div class="space-y-1">
-                    <h1 class="primary_text font-bold text-lg">
-                        {{ shop?.name }}
+                    <h1 class="flex items-center gap-3">
+                        <span class="primary_text font-bold text-lg"
+                            >{{ shop?.name }}
+                        </span>
+                        <span :class="generateBadgeClass(shop?.status)">
+                            {{ shop?.status }}
+                        </span>
                     </h1>
                     <p class="text-sm">{{ shop?.email }}</p>
                     <p class="text-sm">{{ shop?.phone }}</p>
-                    <div class="badge-green">{{ shop?.status }}</div>
-                    <div class="badge-yellow">{{ shop?.status }}</div>
-                    <div class="badge-red">{{ shop?.status }}</div>
-                    <div class="badge-blue">{{ shop?.status }}</div>
                 </div>
             </div>
         </div>
@@ -40,6 +41,8 @@
 <script setup>
 import { faStore } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { computed } from "vue";
+import { generateBadgeClass } from "../../utlis/helpers";
 
 const { shop } = defineProps({
     shop: {
