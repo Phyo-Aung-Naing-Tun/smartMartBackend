@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources\Backend;
 
+use App\Http\Resources\Backend\Shop\BasicShopResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Hash;
@@ -24,6 +25,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'phone' => $this->phone,
             'profile' => $this->profile,
+            'shop' => $this->shop ? BasicShopResource::make($this->shop) : null,
             'created_at' => $this->created_at
         ];
     }
