@@ -17,3 +17,21 @@
 .primary_bg {
     border-color: #1230ae;
 }
+
+/* For Tailwind Custom Class */
+@layer components {
+    .badge-green {
+        @apply bg-green-50 px-3 py-0.5 text-green-600 font-semibold border-green-200 border rounded-full text-sm tracking-wide inline-block;
+    }
+    .badge-yellow {
+        @apply bg-yellow-50 px-3 py-0.5 text-yellow-600 font-semibold border-yellow-200 border rounded-full text-sm tracking-wide inline-block;
+    }
+
+    .badge-red {
+        @apply bg-red-50 px-3 py-0.5 text-red-600 font-semibold border-red-200 border rounded-full text-sm tracking-wide inline-block;
+    }
+
+    .badge-blue {
+        @apply bg-blue-50 px-3 py-0.5 text-blue-600 font-semibold border-blue-200 border rounded-full text-sm tracking-wide inline-block;
+    }
+}

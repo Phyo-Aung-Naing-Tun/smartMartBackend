@@ -2,7 +2,7 @@
     <div class="p-5 space-y-10">
         <Navigator :data="navigatorData" />
         <ProfileCard v-if="user" :user="user" />
-        <ShopCard v-if="user?.shop" :shopId="user?.shop" />
+        <ShopCard v-if="user?.shop" :shop="user?.shop" />
     </div>
 </template>
 <script setup>
