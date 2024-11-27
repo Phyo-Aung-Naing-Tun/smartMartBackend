@@ -4,9 +4,9 @@
             Seller's Shop
         </h1>
         <div
-            class="rounded shadow px-3 py-4 space-y-2 bg-white tracking-wide text-gray-800"
+            class="rounded shadow px-3 py-4 flex justify-between items-start space-y-2 bg-white tracking-wide text-gray-800"
         >
-            <div class="flex items-start gap-7 pb-3 border-b border-blue-600">
+            <div class="flex items-start gap-7">
                 <div class="mb-3">
                     <img
                         class="rounded-full shadow mx-auto w-[100px] h-[100px] flex border border-blue-800"
@@ -36,14 +36,24 @@
                     <p class="text-sm">{{ shop?.phone }}</p>
                 </div>
             </div>
+            <div class="me-2">
+                <Button
+                    classes=" border w-[30px] h-[30px] rounded-full border-blue-700 shadow-md hover:scale-[1.1]"
+                >
+                    <FontAwesomeIcon
+                        :icon="faAngleRight"
+                        class="primary_text"
+                    />
+                </Button>
+            </div>
         </div>
     </div>
 </template>
 <script setup>
-import { faStore } from "@fortawesome/free-solid-svg-icons";
+import { faAngleRight, faStore } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { computed } from "vue";
 import { generateBadgeClass } from "../../utlis/helpers";
+import Button from "../core/Button.vue";
 
 const { shop } = defineProps({
     shop: {

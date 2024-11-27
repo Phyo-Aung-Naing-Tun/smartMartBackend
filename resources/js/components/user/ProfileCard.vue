@@ -2,6 +2,9 @@
     <div>
         <h1 class="text-gray-800 mb-4 text-lg tracking-wide font-bold">
             User Profile
+            <span :class="generateBadgeClass(user?.status) + ' ms-2'">{{
+                user?.status
+            }}</span>
         </h1>
         <div class="rounded shadow p-3 grid grid-cols-7 bg-white">
             <div class="overflow-hidden border-r py-4 col-span-2">
@@ -21,12 +24,7 @@
                         />
                     </div>
                 </div>
-                <h1 class="text-center space-x-3 mb-2 tracking-wide">
-                    <span>{{ user?.name }}</span>
-                    <span :class="generateBadgeClass(user?.status)">{{
-                        user?.status
-                    }}</span>
-                </h1>
+                <h1 class="text-center tracking-wide">{{ user?.name }}</h1>
                 <h1 class="text-center text-sm text-gray-800">
                     {{ user?.phone }}
                 </h1>

@@ -46,7 +46,7 @@ const objectOfAttrs: Object = computed(() => {
     return {
         class: `${props.classes} ${
             props.isDisable && "opacity-20"
-        } rounded tracking-wide transition ease-linear  flex justify-center  items-center gap-3`,
+        }  tracking-wide transition ease-linear  flex justify-center  items-center gap-3`,
         disabled: props.isDisable,
     };
 });
