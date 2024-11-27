@@ -21,7 +21,12 @@
                         />
                     </div>
                 </div>
-                <h1 class="text-center tracking-wide">{{ user?.name }}</h1>
+                <h1 class="text-center space-x-3 mb-2 tracking-wide">
+                    <span>{{ user?.name }}</span>
+                    <span :class="generateBadgeClass(user?.status)">{{
+                        user?.status
+                    }}</span>
+                </h1>
                 <h1 class="text-center text-sm text-gray-800">
                     {{ user?.phone }}
                 </h1>
@@ -76,7 +81,7 @@
     </div>
 </template>
 <script setup>
-import { formatDate } from "../../utlis/helpers";
+import { formatDate, generateBadgeClass } from "../../utlis/helpers";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 const { user } = defineProps({

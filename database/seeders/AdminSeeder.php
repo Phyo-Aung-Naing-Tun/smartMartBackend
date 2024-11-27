@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Enums\UserStatus;
+use App\Enums\UserType;
 use App\Models\User;
 use App\Traits\RoleAndPermissionTrait;
 use Illuminate\Database\Seeder;
@@ -25,6 +25,6 @@ class AdminSeeder extends Seeder
             'address' => 'No(10),First Floor,Singngu,Insein,Yangon',
             'remember_token' => Str::random(10),
         ]);
-        $this->assignRole($user,UserStatus::ADMIN->value);
+        $this->assignRole($user,UserType::ADMIN->value);
     }
 }

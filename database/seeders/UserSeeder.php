@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Enums\UserStatus;
+use App\Enums\UserType;
 use App\Models\User;
 use App\Traits\RoleAndPermissionTrait;
 use Illuminate\Database\Seeder;
@@ -14,7 +14,7 @@ class UserSeeder extends Seeder
     {
         $users = User::factory(10)->create();
         foreach($users as $user){
-            $this->assignRole($user,UserStatus::USER->value);
+            $this->assignRole($user,UserType::USER->value);
         };
     }
 }

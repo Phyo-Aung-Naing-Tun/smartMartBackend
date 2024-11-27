@@ -3,8 +3,10 @@
         <h1 class="text-gray-800 mb-4 text-lg tracking-wide font-bold">
             Seller's Shop
         </h1>
-        <div class="rounded shadow p-3 bg-white tracking-wide text-gray-800">
-            <div class="flex items-start gap-7">
+        <div
+            class="rounded shadow px-3 py-4 space-y-2 bg-white tracking-wide text-gray-800"
+        >
+            <div class="flex items-start gap-7 pb-3 border-b border-blue-600">
                 <div class="mb-3">
                     <img
                         class="rounded-full shadow mx-auto w-[100px] h-[100px] flex border border-blue-800"
@@ -35,7 +37,6 @@
                 </div>
             </div>
         </div>
-        <pre>{{ shop }}</pre>
     </div>
 </template>
 <script setup>

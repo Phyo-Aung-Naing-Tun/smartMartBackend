@@ -4,7 +4,7 @@ namespace App\Enums;
 
 enum UserStatus: string
 {
-    case USER = 'user';
-    case SELLER = 'seller';
-    case ADMIN = 'admin';
+    case PENDING = 'pending';
+    case ACTIVE = 'active';
+    case SUSPEND = 'suspend';
 }

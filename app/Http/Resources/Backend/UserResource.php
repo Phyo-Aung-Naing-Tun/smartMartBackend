@@ -25,6 +25,7 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'phone' => $this->phone,
             'profile' => $this->profile,
+            'status' => $this->status,
             'shop' => $this->shop ? BasicShopResource::make($this->shop) : null,
             'created_at' => $this->created_at
         ];

@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Enums\UserStatus;
+use App\Enums\UserType;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,7 +20,7 @@ class ShopFactory extends Factory
     {
         return [
             'name' => fake()->company(),
-            'seller_id' => User::filterByRole(UserStatus::SELLER->value)->pluck('id')->random(),
+            'seller_id' => User::filterByRole(UserType::SELLER->value)->pluck('id')->random(),
             'email' => fake()->companyEmail(),
             'phone' => fake()->phoneNumber(),
             'about' => fake()->paragraph(),
