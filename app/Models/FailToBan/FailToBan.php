@@ -11,14 +11,15 @@ class FailToBan extends Model
 
     public $fillable = [
         'ip',
-        'identifier',
         'action',
         'payload',
         'path',
         'status',
         'attempt_count',
         'attempt_at',
-        'bann_untail'
-
+        'bann_untail',
+        'platform',
+        'method',
+        'origin'
     ];
 }

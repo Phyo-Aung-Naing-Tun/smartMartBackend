@@ -13,11 +13,13 @@ class FailToBanLog extends Model
 
     public $fillable=[
         'ip',
-        'identifier',
         'action',
         'payload',
         'path',
         'status',
-        'attempt_at'
+        'attempt_at',
+        'platform',
+        'method',
+        'origin'
     ];
 }

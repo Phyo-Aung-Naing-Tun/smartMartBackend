@@ -14,12 +14,15 @@ return new class extends Migration
         Schema::create('fail_to_ban_logs', function (Blueprint $table) {
             $table->id();
             $table->string('ip');
-            $table->string('identifier');
             $table->text('action');
             $table->text('status');
             $table->string('path');
             $table->json('payload');
-            $table->timestamp('attempt_at');
+            $table->text('platform');
+            $table->text('method');
+            $table->text('origin');
+            $table->json('attempt_at');
+            $table->timestamp('bann_untail')->nullable();
             $table->timestamps();
         });
     }
