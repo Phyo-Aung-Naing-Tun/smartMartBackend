@@ -22,4 +22,18 @@ class FailToBan extends Model
         'method',
         'origin'
     ];
+
+    public function scopeIsIpExist($query,$ip)
+    {
+        return $query->when('ip',function($q)use($ip){
+            $q->where('ip',$ip);
+        });
+    }
+
+    public function scopeIsIpBan($query,$ip)
+    {
+        return $query->when('ip',function($q)use($ip){
+            $q->where('ip',$ip)->where('bann_untail' , '>' , now());
+        });
+    }
 }

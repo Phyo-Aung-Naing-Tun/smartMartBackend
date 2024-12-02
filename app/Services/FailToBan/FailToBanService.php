@@ -5,7 +5,7 @@ namespace App\Services\FailToBan;
 use App\Models\FailToBan\FailToBan;
 use Illuminate\Http\Request;
 
-class FailToBanService extends FailToBan
+class FailToBanService 
 {
     private $ip;
     private $action;
@@ -15,9 +15,9 @@ class FailToBanService extends FailToBan
     private $method;
     private $origin;
 
-    public function __construct(Request $request, $type)
+    public function failToBanInit(Request $request, $type)
     {
-        $this->ip =  $request->header('X-CLIENT-IP');
+        $this->ip =  $request->header('X-CLIENT-IP') ?? '12345';
         $this->action = $type;
         $this->path = $request->server('REQUEST_URI');
         $this->payload = json_encode($request->getContent());
@@ -27,24 +27,63 @@ class FailToBanService extends FailToBan
     }
 
     public function log()
-    {
-        
+    {  
         dd(['ip' => $this->ip, 'action' => $this->action, 'path' => $this->path, 'payload' => json_decode($this->payload), 'platform' => $this->platform, 'method' => $this->method, 'origin' => $this->origin]);
     }
 
-    public function create($status)
+    public function createFailtoBan($status)
     {
-        $this->create([
+        FailToBan::create([
             'ip' => $this->ip,
             'action' => $this->action,
-            'payload' => $this->payload,
+            'payload' => json_encode([1 => $this->payload]),
             'path' => $this->path,
             'status' => $status,
             'attempt_count' => 1,
-            'attempt_at' => json_encode([ '1' => now()]),
+            'attempt_at' => json_encode([ 1 => now()]),
             'platform' => $this->platform,
             'method' => $this->method,
             'origin' => $this->origin
         ]);
+    }
+
+    public function updateFailtoBan(FailToBan $failToBan)
+    {
+        $attemptAT = json_decode($failToBan->attempt_at);
+        $payload = json_decode($failToBan->payload);
+        
+        $count = $failToBan->attempt_count + 1;
+        $attemptAT[$count] = now();
+        $payload[$count] = now();
+
+        $failToBan->attempt_count = $count;
+        $failToBan->payload = $payload;
+        $failToBan->attempt_at = json_encode($attemptAT);
+        $failToBan->save(); 
+    }
+
+    public function isIpExist()
+    {
+        $data = FailToBan::isIpExist($this->ip)->first();
+        return $data;
+    }
+
+
+    public function isIpBan()
+    {
+        $data = FailToBan::isIpBan($this->ip)->exists();
+        return $data;
+    }
+
+    public function isIpShouldBan(FailToBan $failToBan,$type = 'auth')
+    {
+        $minAttempth = config("$type.min_attempth");
+        $duration = $failToBan->created_at->addMinutes(config("$type.duration_minutes"));
+
+        if($duration > now() && $failToBan->attempt_count > $minAttempth){
+            return true;
+        }else{
+            return false;
+        }  
     }
 }

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->text('status');
             $table->string('path');
             $table->json('payload');
-            $table->text('platform');
+            $table->text('platform')->nullable();
             $table->text('method');
             $table->text('origin');
             $table->tinyInteger('attempt_count');
