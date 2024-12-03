@@ -20,7 +20,7 @@ class FailToBanService
         $this->ip =  $request->header('X-CLIENT-IP') ?? '12345';
         $this->action = $type;
         $this->path = $request->server('REQUEST_URI');
-        $this->payload = json_encode($request->getContent());
+        $this->payload = json_encode($request->all());
         $this->platform = $request->server('HTTP_SEC_CH_UA_PLATFORM');
         $this->method = $request->server('REQUEST_METHOD');
         $this->origin = $request->server('HTTP_ORIGIN');
@@ -36,11 +36,11 @@ class FailToBanService
         FailToBan::create([
             'ip' => $this->ip,
             'action' => $this->action,
-            'payload' => json_encode([1 => $this->payload]),
+            'payload' => json_encode($this->payload),
             'path' => $this->path,
             'status' => $status,
             'attempt_count' => 1,
-            'attempt_at' => json_encode([ 1 => now()]),
+            'attempt_at' => json_encode(now()),
             'platform' => $this->platform,
             'method' => $this->method,
             'origin' => $this->origin
@@ -49,17 +49,18 @@ class FailToBanService
 
     public function updateFailtoBan(FailToBan $failToBan)
     {
-        $attemptAT = json_decode($failToBan->attempt_at);
-        $payload = json_decode($failToBan->payload);
-        
-        $count = $failToBan->attempt_count + 1;
-        $attemptAT[$count] = now();
-        $payload[$count] = now();
-
-        $failToBan->attempt_count = $count;
-        $failToBan->payload = $payload;
-        $failToBan->attempt_at = json_encode($attemptAT);
+        $failToBan->attempt_count++;
+        $failToBan->attempt_at = json_encode(now());
         $failToBan->save(); 
+    }
+
+    public function bannIP(FailToBan $failToBan,$type)
+    {
+        $bannDuration = now()->addMonth(config('failToBan.'. $type . '.bann_months'));
+        $failToBan->attempt_at = json_encode(now());
+        $failToBan->bann_untail = $bannDuration;
+        $failToBan->save(); 
+
     }
 
     public function isIpExist()
@@ -77,9 +78,8 @@ class FailToBanService
 
     public function isIpShouldBan(FailToBan $failToBan,$type = 'auth')
     {
-        $minAttempth = config("$type.min_attempth");
-        $duration = $failToBan->created_at->addMinutes(config("$type.duration_minutes"));
-
+        $minAttempth = config('failToBan.'. $type . '.min_attempt');
+        $duration = $failToBan->created_at->addMinutes(config('failToBan.'. $type . '.duration_minutes'));
         if($duration > now() && $failToBan->attempt_count > $minAttempth){
             return true;
         }else{

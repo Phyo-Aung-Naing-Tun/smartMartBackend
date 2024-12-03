@@ -36,8 +36,8 @@ class FailToBanMiddleware extends FailToBanService
         if($status > 400){
             $failToBan = $this->isIpExist();
             if($failToBan){
-                if($this->isIpShouldBan($failToBan)){
-                    return 'ban';
+                if($this->isIpShouldBan($failToBan,$type)){
+                 $this->bannIP($failToBan,$type);
                 }else{
                 $this->updateFailtoBan($failToBan);
                 }
