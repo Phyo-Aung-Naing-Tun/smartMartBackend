@@ -86,4 +86,15 @@ class FailToBanService
             return false;
         }  
     }
+
+    public function isIpShouldReset(FailToBan $failToBan,$type = 'auth')
+    {
+        $duration = $failToBan->created_at->addMinutes(config('failToBan.'. $type . '.duration_minutes'));
+        if($duration < now()){
+            return true;
+        }else{
+            return false;
+        }
+
+    }
 }

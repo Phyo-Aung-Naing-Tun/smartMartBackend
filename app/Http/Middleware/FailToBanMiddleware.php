@@ -27,7 +27,7 @@ class FailToBanMiddleware extends FailToBanService
 
         if($this->isIpBan())
         {
-            return $this->baseResponse->error("Your account is ban for . config()");
+            return $this->baseResponse->error("Your account is ban for " . config('failToBan.'.$type.'.bann_months') . 'months',403);
         }
 
         $response = $next($request);
