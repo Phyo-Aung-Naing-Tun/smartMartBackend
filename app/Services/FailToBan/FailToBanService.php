@@ -26,11 +26,6 @@ class FailToBanService
         $this->origin = $request->server('HTTP_ORIGIN');
     }
 
-    public function log()
-    {  
-        dd(['ip' => $this->ip, 'action' => $this->action, 'path' => $this->path, 'payload' => json_decode($this->payload), 'platform' => $this->platform, 'method' => $this->method, 'origin' => $this->origin]);
-    }
-
     public function createFailtoBan($status)
     {
         FailToBan::create([
