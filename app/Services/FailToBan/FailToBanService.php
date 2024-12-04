@@ -15,7 +15,7 @@ class FailToBanService
     private $method;
     private $origin;
 
-    public function failToBanInit(Request $request, $type)
+    public function __construct(Request $request, $type)
     {
         $this->ip =  $request->header('X-CLIENT-IP') ?? '12345';
         $this->action = $type;

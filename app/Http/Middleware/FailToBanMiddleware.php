@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use App\Http\Responses\BaseResponse;
+use App\Models\FailToBan\FailToBan;
 use App\Services\FailToBan\FailToBanService;
 use Closure;
 use Illuminate\Http\Request;
@@ -23,32 +24,31 @@ class FailToBanMiddleware extends FailToBanService
      */
     public function handle(Request $request, Closure $next,$type): Response
     {
-        $this->failToBanInit($request,$type);
+        $failToBanService = new FailToBanService($request,$type);
 
-        if($this->isIpBan())
+        if($failToBanService->isIpBan())
         {
-            return $this->baseResponse->error("Your account is ban for " . config('failToBan.'.$type.'.bann_months') . 'months',403);
+            return $this->baseResponse->error("Your account is ban for " . config('failToBan.'.$type.'.bann_months') . ' months',403);
         }
 
         $response = $next($request);
         $status = $response->getStatusCode();
 
-        if($status > 400){
-            $failToBan = $this->isIpExist();
+        if($status > 400 || $status < 200){
+            $failToBan = $failToBanService->isIpExist();
             if($failToBan){
-                if($this->isIpShouldReset($failToBan)){
+                if($failToBanService->isIpShouldReset($failToBan)){
                     $failToBan->delete();
-                    $failToBan->save();
-                    $this->createFailtoBan($status);
-                }else if($this->isIpShouldBan($failToBan,$type)){
-                    $this->bannIP($failToBan,$type);
+                    $failToBanService->createFailtoBan($status);
+                }else if($failToBanService->isIpShouldBan($failToBan,$type)){
+                    $failToBanService->bannIP($failToBan,$type);
 
                 }else{
-                    $this->updateFailtoBan($failToBan);
+                    $failToBanService->updateFailtoBan($failToBan);
                 }
 
             }else{
-                $this->createFailtoBan($status);
+                $failToBanService->createFailtoBan($status);
             }
 
         }
