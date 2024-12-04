@@ -28,15 +28,15 @@ class FailToBanService extends FailToBanServiceInterface
         $this->origin = $data['origin'];
     }
 
-    public function handleFailRequest($status,$type)
+    public function handleFailRequest($status)
     {
         $failToBan = $this->isIpExist();
         if($failToBan){
             if($this->isIpShouldReset($failToBan)){
                 $failToBan->delete();
                 $this->createFailtoBan($status);
-            }else if($this->isIpShouldBan($failToBan,$type)){
-                $this->bannIP($failToBan,$type);
+            }else if($this->isIpShouldBan($failToBan,$this->action)){
+                $this->bannIP($failToBan,$this->action);
 
             }else{
                 $this->updateFailtoBan($failToBan);

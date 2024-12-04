@@ -14,7 +14,7 @@ interface FailToBanServiceInterface
     public function isIpBan();
     public function isIpShouldBan(FailToBan $failToBan,$type);
     public function isIpShouldReset(FailToBan $failToBan,$type);
-    public function handleFailRequest($status,$type);
+    public function handleFailRequest($status);
 
     
     

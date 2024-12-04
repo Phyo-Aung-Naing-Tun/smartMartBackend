@@ -39,7 +39,7 @@ class FailToBanMiddleware
         $status = $response->getStatusCode();
 
         if($status > 400 || $status < 200){
-           $this->failToBanService->handleFailRequest($status,$type);
+           $this->failToBanService->handleFailRequest($status);
         }
         return $response;
         
