@@ -21,7 +21,7 @@ return new class extends Migration
             $table->text('platform')->nullable();
             $table->text('method')->nullable();
             $table->text('origin')->nullable();
-            $table->json('attempt_at')->nullable();
+            $table->timestamp('attempt_at')->nullable();
             $table->timestamp('bann_untail')->nullable();
             $table->timestamps();
         });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Contracts\FailToBan\FailToBanServiceInterface;
 use App\Http\Responses\BaseResponse;
 use App\Models\FailToBan\FailToBan;
 use App\Services\FailToBan\FailToBanService;
@@ -9,13 +10,16 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class FailToBanMiddleware extends FailToBanService
+class FailToBanMiddleware
 {
 
     private $baseResponse;
-    public function __construct(BaseResponse $baseResponse)
+    private $failToBanService;
+    
+    public function __construct(BaseResponse $baseResponse,FailToBanServiceInterface $failToBanService)
     {
         $this->baseResponse = $baseResponse;
+        $this->failToBanService = $failToBanService;
     }
     /**
      * Handle an incoming request.
@@ -24,9 +28,9 @@ class FailToBanMiddleware extends FailToBanService
      */
     public function handle(Request $request, Closure $next,$type): Response
     {
-        $failToBanService = new FailToBanService($request,$type);
+        $this->failToBanService->initialize($request,$type);
 
-        if($failToBanService->isIpBan())
+        if($this->failToBanService->isIpBan())
         {
             return $this->baseResponse->error("Your account is ban for " . config('failToBan.'.$type.'.bann_months') . ' months',403);
         }
@@ -35,22 +39,7 @@ class FailToBanMiddleware extends FailToBanService
         $status = $response->getStatusCode();
 
         if($status > 400 || $status < 200){
-            $failToBan = $failToBanService->isIpExist();
-            if($failToBan){
-                if($failToBanService->isIpShouldReset($failToBan)){
-                    $failToBan->delete();
-                    $failToBanService->createFailtoBan($status);
-                }else if($failToBanService->isIpShouldBan($failToBan,$type)){
-                    $failToBanService->bannIP($failToBan,$type);
-
-                }else{
-                    $failToBanService->updateFailtoBan($failToBan);
-                }
-
-            }else{
-                $failToBanService->createFailtoBan($status);
-            }
-
+           $this->failToBanService->handleFailRequest($status,$type);
         }
         return $response;
         

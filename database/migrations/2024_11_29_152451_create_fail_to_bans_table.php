@@ -22,7 +22,7 @@ return new class extends Migration
             $table->text('method')->nullable();
             $table->text('origin')->nullable();
             $table->tinyInteger('attempt_count')->nullable();
-            $table->json('attempt_at')->nullable();
+            $table->timestamp('attempt_at')->nullable();
             $table->timestamp('bann_untail')->nullable();
             $table->timestamps();
         });

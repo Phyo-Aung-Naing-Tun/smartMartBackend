@@ -2,10 +2,11 @@
 
 namespace App\Services\FailToBan;
 
+use App\Contracts\FailToBan\FailToBanServiceInterface;
 use App\Models\FailToBan\FailToBan;
 use Illuminate\Http\Request;
 
-class FailToBanService 
+class FailToBanService extends FailToBanServiceInterface
 {
     private $ip;
     private $action;
@@ -15,15 +16,35 @@ class FailToBanService
     private $method;
     private $origin;
 
-    public function __construct(Request $request, $type)
+    public function initialize(Request $request, $type)
     {
-        $this->ip =  $request->header('X-CLIENT-IP') ?? '12345';
-        $this->action = $type;
-        $this->path = $request->server('REQUEST_URI');
-        $this->payload = json_encode($request->all());
-        $this->platform = $request->server('HTTP_SEC_CH_UA_PLATFORM');
-        $this->method = $request->server('REQUEST_METHOD');
-        $this->origin = $request->server('HTTP_ORIGIN');
+        $data = RequestParser::extract($request,$type);
+        $this->ip = $data['ip'];
+        $this->action = $data['action'];
+        $this->path = $data['path'];
+        $this->payload = $data['payload'];
+        $this->platform = $data['platform'];
+        $this->method = $data['method'];
+        $this->origin = $data['origin'];
+    }
+
+    public function handleFailRequest($status,$type)
+    {
+        $failToBan = $this->isIpExist();
+        if($failToBan){
+            if($this->isIpShouldReset($failToBan)){
+                $failToBan->delete();
+                $this->createFailtoBan($status);
+            }else if($this->isIpShouldBan($failToBan,$type)){
+                $this->bannIP($failToBan,$type);
+
+            }else{
+                $this->updateFailtoBan($failToBan);
+            }
+
+        }else{
+            $this->createFailtoBan($status);
+        }
     }
 
     public function createFailtoBan($status)
@@ -35,7 +56,7 @@ class FailToBanService
             'path' => $this->path,
             'status' => $status,
             'attempt_count' => 1,
-            'attempt_at' => json_encode(now()),
+            'attempt_at' => now(),
             'platform' => $this->platform,
             'method' => $this->method,
             'origin' => $this->origin
@@ -45,14 +66,14 @@ class FailToBanService
     public function updateFailtoBan(FailToBan $failToBan)
     {
         $failToBan->attempt_count++;
-        $failToBan->attempt_at = json_encode(now());
+        $failToBan->attempt_at = now();
         $failToBan->save(); 
     }
 
     public function bannIP(FailToBan $failToBan,$type)
     {
         $bannDuration = now()->addMonth(config('failToBan.'. $type . '.bann_months'));
-        $failToBan->attempt_at = json_encode(now());
+        $failToBan->attempt_at = now();
         $failToBan->bann_untail = $bannDuration;
         $failToBan->save(); 
 
