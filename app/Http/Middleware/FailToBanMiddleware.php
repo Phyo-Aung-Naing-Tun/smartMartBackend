@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Contracts\FailToBan\FailToBanLogServiceInterface;
 use App\Contracts\FailToBan\FailToBanServiceInterface;
 use App\Http\Responses\BaseResponse;
 use App\Models\FailToBan\FailToBan;
@@ -15,11 +16,13 @@ class FailToBanMiddleware
 
     private $baseResponse;
     private $failToBanService;
+    private $failToBanLogService;
     
-    public function __construct(BaseResponse $baseResponse,FailToBanServiceInterface $failToBanService)
+    public function __construct(BaseResponse $baseResponse,FailToBanServiceInterface $failToBanService,FailToBanLogServiceInterface $failToBanLogService)
     {
         $this->baseResponse = $baseResponse;
         $this->failToBanService = $failToBanService;
+        $this->failToBanLogService = $failToBanLogService;
     }
     /**
      * Handle an incoming request.
@@ -39,7 +42,8 @@ class FailToBanMiddleware
         $status = $response->getStatusCode();
 
         if($status > 400 || $status < 200){
-           $this->failToBanService->handleFailRequest($status);
+          $failToBan =  $this->failToBanService->handleFailRequest($status);
+          $this->failToBanLogService->makeLog($request,$type,$status,$failToBan);
         }
         return $response;
         
