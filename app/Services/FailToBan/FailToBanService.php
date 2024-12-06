@@ -34,7 +34,7 @@ class FailToBanService implements FailToBanServiceInterface
         if($failToBan){
             if($this->isIpShouldReset($failToBan)){
                 $failToBan->delete();
-                $this->createFailtoBan($status);
+                $failToBan =  $this->createFailtoBan($status);
             }else if($this->isIpShouldBan($failToBan,$this->action)){
                 $this->bannIP($failToBan,$this->action);
 
@@ -43,13 +43,14 @@ class FailToBanService implements FailToBanServiceInterface
             }
 
         }else{
-            $this->createFailtoBan($status);
+            $failToBan = $this->createFailtoBan($status);
         }
+        return $failToBan;
     }
 
     public function createFailtoBan($status)
     {
-        FailToBan::create([
+     return  FailToBan::create([
             'ip' => $this->ip,
             'action' => $this->action,
             'payload' => json_encode($this->payload),
