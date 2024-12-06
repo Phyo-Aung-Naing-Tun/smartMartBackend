@@ -13,6 +13,7 @@ class FailToBanLog extends Model
 
     public $fillable=[
         'ip',
+        'fail_to_ban_id',
         'action',
         'payload',
         'path',
@@ -20,6 +21,12 @@ class FailToBanLog extends Model
         'attempt_at',
         'platform',
         'method',
-        'origin'
+        'origin',
+        'meta'
     ];
+
+    public function failToBan()
+    {
+        return $this->belongsTo(FailToBan::class);
+    }
 }

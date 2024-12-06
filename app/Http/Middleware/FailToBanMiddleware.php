@@ -32,7 +32,7 @@ class FailToBanMiddleware
 
         if($this->failToBanService->isIpBan())
         {
-            return $this->baseResponse->error("Your account is ban for " . config('failToBan.'.$type.'.bann_months') . ' months',403);
+            return $this->baseResponse->error("You are banned for " . config('failToBan.'.$type.'.bann_months') . ' months',403);
         }
 
         $response = $next($request);

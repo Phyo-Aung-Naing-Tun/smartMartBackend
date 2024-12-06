@@ -6,7 +6,7 @@ use App\Contracts\FailToBan\FailToBanServiceInterface;
 use App\Models\FailToBan\FailToBan;
 use Illuminate\Http\Request;
 
-class FailToBanService extends FailToBanServiceInterface
+class FailToBanService implements FailToBanServiceInterface
 {
     private $ip;
     private $action;

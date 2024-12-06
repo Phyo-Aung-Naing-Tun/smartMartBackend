@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('fail_to_ban_logs', function (Blueprint $table) {
             $table->id();
             $table->string('ip')->nullable();
+            $table->unsignedBigInteger('fail_to_ban_id');
             $table->text('action')->nullable();
             $table->text('status')->nullable();
             $table->string('path')->nullable();
@@ -21,8 +22,8 @@ return new class extends Migration
             $table->text('platform')->nullable();
             $table->text('method')->nullable();
             $table->text('origin')->nullable();
+            $table->json('meta')->nullable();
             $table->timestamp('attempt_at')->nullable();
-            $table->timestamp('bann_untail')->nullable();
             $table->timestamps();
         });
     }

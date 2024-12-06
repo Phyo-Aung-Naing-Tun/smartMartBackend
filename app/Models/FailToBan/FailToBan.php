@@ -23,6 +23,11 @@ class FailToBan extends Model
         'origin'
     ];
 
+    public function failToBanLogs()
+    {
+        return $this->hasMany(FailToBanLog::class);
+    }
+
     public function scopeIsIpExist($query,$ip)
     {
         return $query->when('ip',function($q)use($ip){
