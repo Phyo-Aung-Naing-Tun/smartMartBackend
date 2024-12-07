@@ -26,7 +26,6 @@ class RequestParser
                 'headers' => $request->headers->all(),
             ],
         ]
-        
         ];
     }
 }
