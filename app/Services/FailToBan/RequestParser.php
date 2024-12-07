@@ -7,7 +7,7 @@ class RequestParser
 {
     public static function extract(Request $request,$type) : array {
         return [
-        "ip" =>  $request->header('X-CLIENT-IP') ?? '12345',
+        "ip" =>  $request->getUserIp(),
         "action" => $type,
         "path" => $request->server('REQUEST_URI'),
         "payload" => json_encode($request->all()),
