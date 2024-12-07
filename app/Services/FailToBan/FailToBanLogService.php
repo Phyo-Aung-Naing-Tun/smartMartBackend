@@ -23,7 +23,7 @@ class FailToBanLogService implements FailToBanLogServiceInterface
             "platform" => $data['platform'],
             "method" => $data['method'],
             "origin" => $data['origin'],
-            "meta" => json_encode($request->all())
+            "meta" => json_encode($data['meta'])
         ]);
     }
 }
