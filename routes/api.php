@@ -15,7 +15,7 @@ Route::get('/user', function (Request $request) {
 
 Route::controller(AuthController::class)->group(function () {
     Route::post("/register", "register");
-    Route::post("/login", "login")->middleware('failToBan:auth');
+    Route::post("/login", "login")->middleware(['failToBan:auth','throttle:api']);//limit the request 
     Route::post("/logout", "logout")->middleware('auth:sanctum');
     Route::post("/verify_otp", "verifyOtp");
 });
