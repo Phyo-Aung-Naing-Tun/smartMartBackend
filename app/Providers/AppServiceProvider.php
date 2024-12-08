@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Contracts\FailToBan\FailToBanLogServiceInterface;
 use App\Contracts\FailToBan\FailToBanServiceInterface;
+use App\Http\Responses\BaseResponse;
 use App\Services\FailToBan\FailToBanLogService;
 use App\Services\FailToBan\FailToBanService;
 use Illuminate\Cache\RateLimiting\Limit;
@@ -33,7 +34,9 @@ class AppServiceProvider extends ServiceProvider
 
          //to limit the request of login/register/requestOtp.... route
         RateLimiter::for('auth',function(Request $request){
-            return Limit::perMinute(10)->by($request->getUserIp());
+            return Limit::perMinute(10)->by($request->getUserIp())->response(function(){
+                return (new BaseResponse)->error('Too Many Request',429);
+            });
         });
         // ***
 
