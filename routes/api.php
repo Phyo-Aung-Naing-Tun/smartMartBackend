@@ -15,10 +15,10 @@ Route::get('/user', function (Request $request) {
 
 Route::controller(AuthController::class)->group(function () {
     //limit and ban the request for security
-    Route::post("/register", "register")->middleware(['failToBan:auth','throttle:api']);
-    Route::post("/login", "login")->middleware(['failToBan:auth','throttle:api']);
-    Route::post("/logout", "logout")->middleware(['auth:sanctum','throttle:api']);
-    Route::post("/verify_otp", "verifyOtp")->middleware(['failToBan:auth','throttle:api']);
+    Route::post("/register", "register")->middleware(['failToBan:auth','throttle:auth']);
+    Route::post("/login", "login")->middleware(['failToBan:auth','throttle:auth']);
+    Route::post("/logout", "logout")->middleware(['auth:sanctum','throttle:auth']);
+    Route::post("/verify_otp", "verifyOtp")->middleware(['failToBan:auth','throttle:auth']);
 });
 
 Route::middleware(['auth:sanctum'])->prefix('profile')->group(
