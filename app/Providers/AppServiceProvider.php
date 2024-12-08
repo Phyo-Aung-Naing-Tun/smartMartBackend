@@ -30,16 +30,19 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //Rate Limiters
-        RateLimiter::for('api',function(Request $request){
-            return Limit::perMinute(1)->by($request->getUserIp());
+
+         //to limit the request of login/register/requestOtp.... route
+        RateLimiter::for('auth',function(Request $request){
+            return Limit::perMinute(10)->by($request->getUserIp());
         });
-
-
+        // ***
 
         //Request Macros
         Request::macro('getUserIp',function(){
             return $this->header('X-CLIENT-IP') ?? '12345';
         });
+        // ***
+
 
         Sanctum::usePersonalAccessTokenModel(PersonalAccessToken::class);
     }
