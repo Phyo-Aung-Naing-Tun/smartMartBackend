@@ -14,10 +14,11 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::controller(AuthController::class)->group(function () {
-    Route::post("/register", "register");
-    Route::post("/login", "login")->middleware('failToBan:auth');
-    Route::post("/logout", "logout")->middleware('auth:sanctum');
-    Route::post("/verify_otp", "verifyOtp");
+    //limit and ban the request for security
+    Route::post("/register", "register")->middleware(['failToBan:auth','throttle:api']);
+    Route::post("/login", "login")->middleware(['failToBan:auth','throttle:api']);
+    Route::post("/logout", "logout")->middleware(['auth:sanctum','throttle:api']);
+    Route::post("/verify_otp", "verifyOtp")->middleware(['failToBan:auth','throttle:api']);
 });
 
 Route::middleware(['auth:sanctum'])->prefix('profile')->group(
