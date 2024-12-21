@@ -7,6 +7,7 @@ use App\Contracts\FailToBan\FailToBanServiceInterface;
 use App\Http\Responses\BaseResponse;
 use App\Services\FailToBan\FailToBanLogService;
 use App\Services\FailToBan\FailToBanService;
+use App\Services\MailService;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
@@ -23,6 +24,12 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->bind(FailToBanServiceInterface::class,FailToBanService::class);
         $this->app->bind(FailToBanLogServiceInterface::class,FailToBanLogService::class);
+
+        //serives segleton
+
+        $this->app->singleton("mailService",function($app){
+            return new MailService();
+        });
     }
 
     /**

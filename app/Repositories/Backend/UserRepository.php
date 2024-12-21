@@ -4,6 +4,7 @@ namespace App\Repositories\Backend;
 use App\Http\Resources\Backend\UserResource;
 use App\Http\Responses\BaseResponse;
 use App\Models\User;
+use App\Services\MailService;
 use Exception;
 
 class UserRepository{
