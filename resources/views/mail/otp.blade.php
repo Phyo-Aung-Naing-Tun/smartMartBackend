@@ -4,10 +4,9 @@
 <head>
     <title>Your OTP Code</title>
 </head>
-
 <body>
     <h2>Your OTP Code </h2>
-    <h3>{{ $otp }}</h3>
+    <h3>{{ $data }}</h3>
     <p>Please use this code to complete your authentication. </p>
     <p>It is valid for 5 minutes.</p>
     <h4>Thanks,</h4>

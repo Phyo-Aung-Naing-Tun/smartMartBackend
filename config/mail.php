@@ -113,8 +113,4 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
-    //For View File And Type
-
-    'otp' => 'mail.otp',
-
 ];

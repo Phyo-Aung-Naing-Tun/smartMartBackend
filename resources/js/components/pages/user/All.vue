@@ -1,6 +1,7 @@
 <template>
     <div class="px-3 mt-6">
         <Navigator :data="navigatorData" />
+        <m-input />
         <div class="my-4 grid grid-cols-4 gap-5">
             <SearchInput
                 classes="focus:outline-blue-900 rounded"
@@ -24,16 +25,30 @@
 import Footable from "../../core/Footable.vue";
 import json from "../../../directives/user.json";
 import apiClient from "../../../axios/axiosConfig";
-import { ref, onMounted, inject, reactive } from "vue";
+import { ref, onMounted, inject } from "vue";
 import { notiError, transformDropDownData } from "../../../utlis/helpers";
 import SearchInput from "../../ui/SearchInput.vue";
 import DropDown from "../../core/DropDown.vue";
 import Navigator from "../../core/Navigator.vue";
-import { useRoute } from "vue-router";
+
 let users = ref(null);
 let useDebounce = inject("useDebounce");
 let searchValue = ref(null);
 let roleValue = ref(null);
+
+const selectData = ref([
+    {
+        type: "normal",
+        key: "name",
+    },
+    {
+        type: "dropDown",
+        key: "job_id",
+    },
+    {
+        type: "date",
+    },
+]);
 
 const navigatorData = ref([{ name: "Users", link: "/users", current: true }]);
 

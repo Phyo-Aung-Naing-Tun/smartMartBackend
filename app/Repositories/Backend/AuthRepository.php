@@ -2,6 +2,8 @@
 
 namespace App\Repositories\Backend;
 
+use App\Events\SendOtp;
+use App\Events\SuccessfullyRegister;
 use App\Http\Resources\AuthResource;
 use App\Models\User;
 use App\Mail\OtpMail;
@@ -35,7 +37,8 @@ class AuthRepository
             $user->otp = $otp;
             $user->otp_expired_at = Carbon::now()->addMinutes(5);
             $user->save();
-            Mail::to($user)->send(new OtpMail($otp));
+            logger(["user", $user->email]);
+            SendOtp::dispatch($user, $otp);
             return $this->response->success(["success" => true], 'Your otp is send to your email address.', 200);
         } else {
             return $this->response->error('Login Failed', 401);
@@ -60,6 +63,7 @@ class AuthRepository
 
                 $user = User::create($validated);
                 $token = $user->createToken('auth_token')->plainTextToken;
+                SuccessfullyRegister::dispatch($user, "Welcome $user->name ! Registered successfylly ");
                 return $this->response->success(['data' => $user, 'token' => $token], 200);
             } catch (\Throwable $e) {
                 return $this->response->error($e->getMessage(), 500);
