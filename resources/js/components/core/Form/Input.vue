@@ -5,6 +5,9 @@
             v-bind="attributes"
             @keydown="handleKeyDown"
         />
+        <small v-if="errorMessage" class="tracking-wide text-red-600 mt-2">{{
+            errorMessage
+        }}</small>
     </div>
 </template>
 <script setup>
@@ -12,7 +15,7 @@ import { computed, ref } from "vue";
 
 const props = defineProps({
     type: {
-        required: false,
+        required: false, //text, number, password, confirm_password
         default: "text",
         type: String,
     },
@@ -32,10 +35,15 @@ const props = defineProps({
         required: false,
         default: false,
     },
+    compareValue: {
+        required: false,
+        type: String,
+    },
 });
 const banKeysForNumberInput = ref(["e", "E", "ArrowUp", "ArrowDown", "=", "-"]);
 const isBanForNumberInput = ref(false);
 const result = defineModel();
+const errorMessage = ref(null);
 
 function handleKeyDown(e) {
     isBanForNumberInput.value = banKeysForNumberInput.value.includes(e.key);
@@ -44,8 +52,22 @@ function handleKeyDown(e) {
 function handleInput(e) {
     if (filterCharacters(e.data) && props.type == "text")
         e.target.value = result.value;
+
     if (isBanForNumberInput.value && props.type == "number")
         e.target.value = result.value;
+
+    if (
+        props.compareValue &&
+        props.type == "confirm_password" &&
+        e.target.value != props.compareValue
+    ) {
+        errorMessage.value = "Confirm password must be same";
+    } else if (props.compareValue && e.target.value != props.compareValue) {
+        errorMessage.value = "Compare value must be same";
+    } else {
+        errorMessage.value = null;
+    }
+
     result.value = e.target.value;
 }
 
