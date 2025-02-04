@@ -39,11 +39,26 @@ const props = defineProps({
         required: false,
         type: String,
     },
+    placeholder: {
+        required: false,
+        type: String,
+    },
 });
 const banKeysForNumberInput = ref(["e", "E", "ArrowUp", "ArrowDown", "=", "-"]);
 const isBanForNumberInput = ref(false);
 const result = defineModel();
 const errorMessage = ref(null);
+
+const attributes = computed(() => {
+    return {
+        class: "border border-gray-700 px-4 py-1.5 block w-full focus:outline-blue-900 rounded",
+        type: props.type,
+        maxlength: props.maxLength,
+        minlength: props.minLength,
+        required: props.isRequired,
+        placeholder: props.placeholder,
+    };
+});
 
 function handleKeyDown(e) {
     isBanForNumberInput.value = banKeysForNumberInput.value.includes(e.key);
@@ -70,16 +85,6 @@ function handleInput(e) {
 
     result.value = e.target.value;
 }
-
-const attributes = computed(() => {
-    return {
-        class: "border border-gray-700 px-4 py-1.5 block w-full focus:outline-blue-900 rounded",
-        type: props.type,
-        maxlength: props.maxLength,
-        minlength: props.minLength,
-        required: props.isRequired,
-    };
-});
 
 function filterCharacters(text) {
     return props.banCharacters.includes(text);

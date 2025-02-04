@@ -1,7 +1,6 @@
 <template>
     <div class="px-3 mt-6">
         <Navigator :data="navigatorData" />
-        <m-input v-model="result" compareValue="hlahla" />
         <div>{{ result }}</div>
         <div class="my-4 grid grid-cols-4 gap-5">
             <SearchInput
