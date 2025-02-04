@@ -1,10 +1,19 @@
 <template>
     <div>
-        <input
-            @input="handleInput"
-            v-bind="attributes"
-            @keydown="handleKeyDown"
-        />
+        <div>
+            <label
+                class="tracking-wide"
+                v-if="label"
+                :for="id ? id : generatedId"
+                >{{ label }} <span v-if="isRequired">*</span></label
+            >
+            <input
+                :id="id ? id : generatedId"
+                @input="handleInput"
+                v-bind="attributes"
+                @keydown="handleKeyDown"
+            />
+        </div>
         <small v-if="errorMessage" class="tracking-wide text-red-600 mt-2">{{
             errorMessage
         }}</small>
@@ -20,22 +29,28 @@ const props = defineProps({
         type: String,
     },
     banCharacters: {
+        //to ban in text input
         required: false,
         default: ["/", "//", "||"],
+        type: Array,
     },
     maxLength: {
         required: false,
         default: false,
+        type: Number,
     },
     minLength: {
         required: false,
         default: false,
+        type: Number,
     },
     isRequired: {
         required: false,
         default: false,
+        type: Boolean,
     },
     compareValue: {
+        //to compare two value
         required: false,
         type: String,
     },
@@ -43,12 +58,28 @@ const props = defineProps({
         required: false,
         type: String,
     },
+    id: {
+        required: false,
+        default: null,
+        type: String | Number,
+    },
+    label: {
+        required: false,
+        default: null,
+        type: String,
+    },
+    minimize: {
+        //for label position
+        required: false,
+        default: true,
+        type: Boolean,
+    },
 });
 const banKeysForNumberInput = ref(["e", "E", "ArrowUp", "ArrowDown", "=", "-"]);
 const isBanForNumberInput = ref(false);
 const result = defineModel();
 const errorMessage = ref(null);
-
+const generatedId = ref(generaCustomId());
 const attributes = computed(() => {
     return {
         class: "border border-gray-700 px-4 py-1.5 block w-full focus:outline-blue-900 rounded",
@@ -88,6 +119,33 @@ function handleInput(e) {
 
 function filterCharacters(text) {
     return props.banCharacters.includes(text);
+}
+
+function generaCustomId() {
+    let words = [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "0",
+        "A",
+        "b",
+        "C",
+        "d",
+        "E",
+        "f",
+    ];
+    let id = [];
+    for (let i = 0; i < 6; i++) {
+        let index = parseInt(Math.random() * words.length);
+        id.push(words[index]);
+    }
+    return id.join("");
 }
 </script>
 <style scoped>

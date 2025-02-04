@@ -36,7 +36,7 @@
                                 class="text-lg flex justify-between items-center font-medium leading-6 text-gray-900"
                             >
                                 <span>{{ title }}</span>
-                                <Button
+                                <m-button
                                     @action="closeModal"
                                     classes="hover:scale-[1.1]"
                                 >
@@ -44,7 +44,7 @@
                                         class="text-red-600"
                                         :icon="faCircleXmark"
                                     />
-                                </Button>
+                                </m-button>
                             </DialogTitle>
 
                             <div class="mt-10 otp-modal flex justify-center">
@@ -67,14 +67,14 @@
                                 />
                             </div>
 
-                            <Button
+                            <m-button
                                 v-if="!isTimesUp"
                                 @action="submitOtp"
                                 :isDisable="isDisableButton"
                                 text="Confirm"
                                 classes="bg-blue-600 hover:bg-blue-400 text-white w-full h-[40px]"
                             />
-                            <Button
+                            <m-button
                                 v-else
                                 @action="resendCode"
                                 text="Resend Code"
@@ -89,7 +89,6 @@
 </template>
 
 <script setup lang="ts">
-import Button from "../Button.vue";
 import { ref } from "vue";
 import {
     TransitionRoot,

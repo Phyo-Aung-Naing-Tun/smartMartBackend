@@ -38,7 +38,7 @@
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                 />
             </div>
-            <Button
+            <m-button
                 :isLoading="isLoading"
                 type="submit"
                 text="Sign In"
@@ -71,7 +71,6 @@ import apiClient from "../../../axios/axiosConfig";
 import { notiError, notiSuccess } from "../../../utlis/helpers";
 import OTPModal from "../../core/modals/OTPModal.vue";
 import { router } from "../../../router";
-import Button from "../../core/Button.vue";
 const openOtpModal: Boolean = ref(false);
 const isLoading: Boolean = ref(false);
 

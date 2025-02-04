@@ -12,6 +12,13 @@
                 :data="dropdownData"
                 @selectValue="filter"
             />
+            <m-button
+                link="/users/create"
+                text="Add New"
+                class="border border-blue-800 bg-blue-800 hover:bg-blue-500 text-white rounded w-[120px]"
+            >
+                <FontAwesomeIcon class="ms-2" :icon="faPlusCircle" />
+            </m-button>
         </div>
         <Footable
             v-if="users"
@@ -30,6 +37,8 @@ import { notiError, transformDropDownData } from "../../../utlis/helpers";
 import SearchInput from "../../ui/SearchInput.vue";
 import DropDown from "../../core/DropDown.vue";
 import Navigator from "../../core/Navigator.vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
 const users = ref(null);
 const result = ref(null);

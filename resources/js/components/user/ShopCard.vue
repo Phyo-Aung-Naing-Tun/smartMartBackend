@@ -37,14 +37,14 @@
                 </div>
             </div>
             <div class="me-2">
-                <Button
+                <m-button
                     classes=" border w-[30px] h-[30px] rounded-full border-blue-700 shadow-md hover:scale-[1.1]"
                 >
                     <FontAwesomeIcon
                         :icon="faAngleRight"
                         class="primary_text"
                     />
-                </Button>
+                </m-button>
             </div>
         </div>
     </div>
@@ -53,7 +53,6 @@
 import { faAngleRight, faStore } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { generateBadgeClass } from "../../utlis/helpers";
-import Button from "../core/Button.vue";
 
 const { shop } = defineProps({
     shop: {

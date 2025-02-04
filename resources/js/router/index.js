@@ -10,6 +10,7 @@ const Home = () => import("../views/index.vue");
 const Index = () => import("../views/user/index.vue");
 const UserDetails = () => import("../views/user/Details.vue");
 const UserEdit = () => import("../views/user/Edit.vue");
+const UserCreate = () => import("../views/user/Create.vue");
 // ----
 
 //Auth
@@ -33,6 +34,10 @@ const routes = [
             {
                 path: "users",
                 component: Index,
+            },
+            {
+                path: "users/create",
+                component: UserCreate,
             },
             {
                 path: "users/:id",
