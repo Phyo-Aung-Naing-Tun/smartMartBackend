@@ -1,7 +1,8 @@
 <template>
     <div class="px-3 mt-6">
         <Navigator :data="navigatorData" />
-        <m-input />
+        <m-input v-model="result" type="number" />
+        <div>{{ result }}</div>
         <div class="my-4 grid grid-cols-4 gap-5">
             <SearchInput
                 classes="focus:outline-blue-900 rounded"
@@ -31,10 +32,11 @@ import SearchInput from "../../ui/SearchInput.vue";
 import DropDown from "../../core/DropDown.vue";
 import Navigator from "../../core/Navigator.vue";
 
-let users = ref(null);
-let useDebounce = inject("useDebounce");
-let searchValue = ref(null);
-let roleValue = ref(null);
+const users = ref(null);
+const result = ref(null);
+const useDebounce = inject("useDebounce");
+const searchValue = ref(null);
+const roleValue = ref(null);
 
 const selectData = ref([
     {
