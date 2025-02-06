@@ -1,15 +1,15 @@
 <template>
     <div>
-        <div :class="getLayout()">
+        <div :class="$getInputLayout(minimize)">
             <label
-                :class="getLabelPosition()"
+                :class="$getLabelPosition(grid)"
                 class="tracking-wide"
                 v-if="label"
                 :for="id ? id : generatedId"
                 >{{ label }} <span v-if="isRequired">*</span></label
             >
             <input
-                :class="getInputPosition()"
+                :class="$getInputPosition(grid)"
                 :id="id ? id : generatedId"
                 @input="handleInput"
                 v-bind="attributes"
@@ -153,20 +153,6 @@ function generaCustomId() {
         id.push(words[index]);
     }
     return id.join("");
-}
-
-//for style grid
-
-function getLayout() {
-    return props.minimize ? "space-y-2" : "grid grid-cols-12";
-}
-
-function getLabelPosition() {
-    return props.minimize ? "" : `col-span-${props.grid}`;
-}
-
-function getInputPosition() {
-    return props.minimize ? "" : `col-span-${12 - props.grid}`;
 }
 </script>
 <style scoped>
