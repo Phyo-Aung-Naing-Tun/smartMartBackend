@@ -1,13 +1,15 @@
 <template>
     <div>
-        <div>
+        <div :class="getLayout()">
             <label
+                :class="getLabelPosition()"
                 class="tracking-wide"
                 v-if="label"
                 :for="id ? id : generatedId"
                 >{{ label }} <span v-if="isRequired">*</span></label
             >
             <input
+                :class="getInputPosition()"
                 :id="id ? id : generatedId"
                 @input="handleInput"
                 v-bind="attributes"
@@ -71,8 +73,13 @@ const props = defineProps({
     minimize: {
         //for label position
         required: false,
-        default: true,
+        default: false,
         type: Boolean,
+    },
+    grid: {
+        required: false,
+        default: 2,
+        type: Number,
     },
 });
 const banKeysForNumberInput = ref(["e", "E", "ArrowUp", "ArrowDown", "=", "-"]);
@@ -146,6 +153,20 @@ function generaCustomId() {
         id.push(words[index]);
     }
     return id.join("");
+}
+
+//for style grid
+
+function getLayout() {
+    return props.minimize ? "space-y-2" : "grid grid-cols-12";
+}
+
+function getLabelPosition() {
+    return props.minimize ? "" : `col-span-${props.grid}`;
+}
+
+function getInputPosition() {
+    return props.minimize ? "" : `col-span-${12 - props.grid}`;
 }
 </script>
 <style scoped>
