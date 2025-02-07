@@ -5,3 +5,6 @@ app.component("m-input", Input);
 
 import Button from "@/components/core/Button.vue";
 app.component("m-button", Button);
+
+import Selector from "@/components/core/Form/selector.vue";
+app.component("m-selector", Selector);
