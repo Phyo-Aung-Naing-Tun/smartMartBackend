@@ -67,10 +67,10 @@
 <script setup lang="ts">
 import { reactive, ref } from "vue";
 import { RouterLink } from "vue-router";
-import apiClient from "../../../axios/axiosConfig";
-import { notiError, notiSuccess } from "../../../utlis/helpers";
-import OTPModal from "../../core/modals/OTPModal.vue";
-import { router } from "../../../router";
+import apiClient from "@/axios/axiosConfig";
+import { notiError, notiSuccess } from "@/utlis/helpers";
+import OTPModal from ".@/core/modals/OTPModal.vue";
+import { router } from "@/router";
 const openOtpModal: Boolean = ref(false);
 const isLoading: Boolean = ref(false);
 
