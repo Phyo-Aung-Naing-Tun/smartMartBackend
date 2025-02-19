@@ -73,6 +73,33 @@ export function generateActions(actions, targetId) {
     return result;
 }
 
+export function generaCustomId(){
+    let words = [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "0",
+        "A",
+        "b",
+        "C",
+        "d",
+        "E",
+        "f",
+    ];
+    let id = [];
+    for (let i = 0; i < 6; i++) {
+        let index = parseInt(Math.random() * words.length);
+        id.push(words[index]);
+    }
+    return id.join("");
+}
+
 export default {
     notiSuccess,
     notiError,
@@ -80,4 +107,5 @@ export default {
     transformDropDownData,
     generateActions,
     generateBadgeClass,
+    generaCustomId,
 };

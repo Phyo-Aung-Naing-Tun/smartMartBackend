@@ -23,6 +23,7 @@
 </template>
 <script setup>
 import { computed, ref } from "vue";
+import helpers from "@/utlis/helpers.js";
 
 const props = defineProps({
     type: {
@@ -38,12 +39,12 @@ const props = defineProps({
     },
     maxLength: {
         required: false,
-        default: false,
+        default: 100,
         type: Number,
     },
     minLength: {
         required: false,
-        default: false,
+        default: 0,
         type: Number,
     },
     isRequired: {
@@ -86,7 +87,7 @@ const banKeysForNumberInput = ref(["e", "E", "ArrowUp", "ArrowDown", "=", "-"]);
 const isBanForNumberInput = ref(false);
 const result = defineModel();
 const errorMessage = ref(null);
-const generatedId = ref(generaCustomId());
+const generatedId = ref( helpers.generaCustomId());
 const attributes = computed(() => {
     return {
         class: "border border-gray-700 px-4 py-1.5 block w-full focus:outline-blue-900 rounded",
@@ -128,32 +129,7 @@ function filterCharacters(text) {
     return props.banCharacters.includes(text);
 }
 
-function generaCustomId() {
-    let words = [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9",
-        "0",
-        "A",
-        "b",
-        "C",
-        "d",
-        "E",
-        "f",
-    ];
-    let id = [];
-    for (let i = 0; i < 6; i++) {
-        let index = parseInt(Math.random() * words.length);
-        id.push(words[index]);
-    }
-    return id.join("");
-}
+
 </script>
 <style scoped>
 /* Chrome, Safari, Edge, Opera */

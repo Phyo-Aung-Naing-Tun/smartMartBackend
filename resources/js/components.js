@@ -8,3 +8,6 @@ app.component("m-button", Button);
 
 import Selector from "@/components/core/Form/selector.vue";
 app.component("m-selector", Selector);
+
+import RoleSelector from "@/components/core/Selectors/RoleSelector.vue";
+app.component("role-selector", RoleSelector);

@@ -2,8 +2,6 @@
     <div class="px-3 mt-6">
         <Navigator :data="navigatorData" />
         <div class="mt-10 px-10">
-            <!-- User Create Form -->
-            <m-selector />
             <CreateOrEditForm />
         </div>
     </div>

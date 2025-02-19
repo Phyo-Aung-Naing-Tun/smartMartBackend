@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import { minLength } from "@vuelidate/validators";
-</script>
-
 <template>
     <div>
         <form action="#" class="space-y-6">
@@ -36,6 +32,7 @@ import { minLength } from "@vuelidate/validators";
                 placeholder="eg; no(),street,region,township,city"
                 isRequired
             />
+            <role-selector/>
         </form>
     </div>
 </template>
