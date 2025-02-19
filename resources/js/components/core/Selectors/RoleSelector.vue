@@ -5,15 +5,16 @@
 </template>
 <script setup>
 import { inject } from 'vue';
+import { RolePuller } from '@/composables/RolePuller';
 
 
 const useDebounce = inject("useDebounce");
 
 function searchRole(value){
     useDebounce(()=>{
-        console.log(value);
+     let result =  RolePuller(value);
+     console.log(result);
     },500)
 }
-
 
 </script>

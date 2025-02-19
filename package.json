@@ -23,6 +23,7 @@
         "@headlessui/vue": "^1.7.23",
         "@vuelidate/core": "^2.0.3",
         "@vuelidate/validators": "^2.0.4",
+        "pinia": "^3.0.1",
         "vue-multiselect": "^3.2.0",
         "vue-router": "^4.4.5",
         "vue3-otp-input": "^0.5.21",
