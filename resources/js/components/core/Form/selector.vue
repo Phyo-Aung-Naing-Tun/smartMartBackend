@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div class="relative">
+        <pulse-loading v-if="isSearching" class=" text-blue-700 absolute right-2 top-[8%] "/>
         <m-input :label="label" :placeholder="placeholder" :mininize="minimize" :grid="grid"  />
     </div>
 </template>
@@ -23,6 +24,11 @@ const props = defineProps({
         required: false,
         default: 2,
         type: Number,
+    },
+    isSearching: {
+        required: false,
+        default: false,
+        type: Boolean,
     },
 });
 

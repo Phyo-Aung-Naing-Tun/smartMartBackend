@@ -11,3 +11,6 @@ app.component("m-selector", Selector);
 
 import RoleSelector from "@/components/core/Selectors/RoleSelector.vue";
 app.component("role-selector", RoleSelector);
+
+import PulseSpinner from "@/components/core/Loadings/PulseSpinner.vue";
+app.component("pulse-loading",PulseSpinner);
