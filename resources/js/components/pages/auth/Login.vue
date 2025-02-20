@@ -53,7 +53,7 @@
                 >
             </p>
         </form>
-        <OTPModal
+        <otp-modal
             :secondsForTimmer="1000"
             :width="'400px'"
             title="Enter OTP Code"
@@ -69,7 +69,6 @@ import { reactive, ref } from "vue";
 import { RouterLink } from "vue-router";
 import apiClient from "@/axios/axiosConfig";
 import { notiError, notiSuccess } from "@/utlis/helpers";
-import OTPModal from "@/core/modals/OTPModal.vue";
 import { router } from "@/router";
 const openOtpModal = ref(false);
 const isLoading = ref(false);

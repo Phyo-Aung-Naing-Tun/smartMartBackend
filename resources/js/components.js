@@ -1,5 +1,8 @@
 import app from "./main";
 
+import OTPModal from "@/components/core/modals/OTPModal.vue";
+app.component("otp-modal",OTPModal);
+
 import Input from "@/components/core/Form/Input.vue";
 app.component("m-input", Input);
 

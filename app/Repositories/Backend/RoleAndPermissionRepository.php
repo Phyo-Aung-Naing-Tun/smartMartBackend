@@ -10,6 +10,7 @@ class RoleAndPermissionRepository{
     public function showRoles($request)
     {
         $param = data_get($request,"search");
+        return $param;
         $roles = Role::all();
         return RoleAndPermissionResource::collection($roles);
     }
