@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\Backend\RoleAndPermissionRepository;
+use Illuminate\Http\Request;
 
 class RoleAndPermissionController extends Controller
 {
@@ -13,8 +14,8 @@ class RoleAndPermissionController extends Controller
         $this->repo = $roleAndPermissionRepository;
     }
 
-    public function showRoles()
+    public function showRoles(Request $request)
     {
-        return $this->repo->showRoles();
+        return $this->repo->showRoles($request);
     }
 }

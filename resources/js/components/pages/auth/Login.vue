@@ -64,15 +64,15 @@
         />
     </div>
 </template>
-<script setup lang="ts">
+<script setup>
 import { reactive, ref } from "vue";
 import { RouterLink } from "vue-router";
 import apiClient from "@/axios/axiosConfig";
 import { notiError, notiSuccess } from "@/utlis/helpers";
-import OTPModal from ".@/core/modals/OTPModal.vue";
+import OTPModal from "@/core/modals/OTPModal.vue";
 import { router } from "@/router";
-const openOtpModal: Boolean = ref(false);
-const isLoading: Boolean = ref(false);
+const openOtpModal = ref(false);
+const isLoading = ref(false);
 
 const form = reactive({
     email: null,
@@ -97,7 +97,7 @@ function login() {
         });
 }
 
-function submitOTP(value: String): void {
+function submitOTP(value){
     apiClient
         .post("/verify_otp", {
             email: form.email,
@@ -124,11 +124,11 @@ function submitOTP(value: String): void {
     console.log(value);
 }
 
-function rerequestOTP(): void {
+function rerequestOTP() {
     console.log("rerequesting");
 }
 
-function updateOtpModal(): void {
+function updateOtpModal() {
     localStorage.clear("duration"); //reset the timmer
     openOtpModal.value = !openOtpModal.value;
 }

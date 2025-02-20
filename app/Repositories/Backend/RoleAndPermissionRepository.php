@@ -7,8 +7,9 @@ use Spatie\Permission\Models\Role;
 
 class RoleAndPermissionRepository{
     use RoleAndPermissionTrait;
-    public function showRoles()
+    public function showRoles($request)
     {
+        $param = data_get($request,"search");
         $roles = Role::all();
         return RoleAndPermissionResource::collection($roles);
     }
