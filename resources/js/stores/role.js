@@ -13,8 +13,8 @@ export const useRolesStore = defineStore("roles",()=>{
 
         if(cacheRole){            
             roles.value = cacheRole?.roles;
-        }else{
-            apiClient.get('/roles')
+        }else{            
+            apiClient.get('/roles', {search : param})
             .then(response => {
                 console.log(response.data.data);
             })
