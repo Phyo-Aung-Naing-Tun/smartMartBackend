@@ -10,8 +10,9 @@ class RoleAndPermissionRepository{
     public function showRoles($request)
     {
         $param = data_get($request,"search");
-        return $param;
-        $roles = Role::all();
+        $roles = Role::when($param, function($query)use($param){
+            return $query->where("name" , "like" , "%$param%");
+        })->get();
         return RoleAndPermissionResource::collection($roles);
     }
 }
